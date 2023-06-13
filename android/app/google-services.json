@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "436839965700",
+    "project_id": "aplikasikesehatan-7ce04",
+    "storage_bucket": "aplikasikesehatan-7ce04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436839965700:android:38309f34be596032fa0151",
+        "android_client_info": {
+          "package_name": "com.example.tugasakhir_aplikasi_kesehatan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436839965700-d014nl5f6ohvgi92juslvc59s53no1on.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaKEDgGEfGUzr3DlAZWrrTYe7bPwFuWWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436839965700-d014nl5f6ohvgi92juslvc59s53no1on.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
