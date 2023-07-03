@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
 import 'editProfile.dart';
 
 class profile extends StatefulWidget {
@@ -128,7 +130,14 @@ class _profileState extends State<profile> {
               ),
               const Divider(),
               const SizedBox(height: 10),
-              profileIcon(judul: "Logout", ikon: Icons.logout, saatTekan: () {})
+              profileIcon(
+                  judul: "Logout",
+                  ikon: Icons.logout,
+                  saatTekan: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HalamanAwal()));
+                  })
             ],
           ),
         ),
