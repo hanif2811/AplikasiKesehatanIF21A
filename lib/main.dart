@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/KalkulatorKalori.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 // import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
@@ -26,11 +27,11 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, AsyncSnapshot<User?> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              return const Beranda();
+              return HomePage();
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
-            return HomePage();
+            return Daftar();
           }),
     );
   }
