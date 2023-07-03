@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,35 +29,51 @@ class _HomePageState extends State<HomePage> {
                     fit: BoxFit.contain),
               ),
             ),
-            Card(
-              color: Colors.yellow,
-              elevation: 5,
-              child: Container(
-                height: 50,
-                child: InkWell(
-                  splashColor: Colors.yellow,
-                  child: Center(
-                    child: Text(
-                      "Masuk",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+              child: Card(
+                color: Colors.yellow,
+                elevation: 5,
+                child: Container(
+                  height: 50,
+                  child: InkWell(
+                    splashColor: Colors.yellow,
+                    child: Center(
+                      child: Text(
+                        "Masuk",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
             SizedBox(height: 20),
-            Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Container(
-                height: 50,
-                child: InkWell(
-                  splashColor: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                  child: Center(
-                    child: Text(
-                      "Daftar",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Daftar()),
+                );
+              },
+              child: Card(
+                color: Colors.blue,
+                elevation: 5,
+                child: Container(
+                  height: 50,
+                  child: InkWell(
+                    splashColor: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    child: Center(
+                      child: Text(
+                        "Daftar",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
                     ),
                   ),
                 ),

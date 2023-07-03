@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 import 'circle_button.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/bmi_kalkulator.dart';
 
@@ -118,10 +119,16 @@ class HomePage extends StatelessWidget {
                       size: 50,
                       icon: Icons.person,
                     ),
-                    CircleButton(
-                      label: 'Lansia',
-                      size: 50,
-                      icon: Icons.people,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Beranda()));
+                      },
+                      child: CircleButton(
+                        label: 'Lansia',
+                        size: 50,
+                        icon: Icons.people,
+                      ),
                     ),
                     CircleButton(
                       label: 'Anak-Anak',
