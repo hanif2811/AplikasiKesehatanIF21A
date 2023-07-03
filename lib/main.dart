@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/KalkulatorKalori.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 // import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 // import 'package:tugasakhir_aplikasi_kesehatan/views/login_registrer/HalamanAwal.dart';
 
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
-            return HalamanAwal();
+            return HomePage();
           }),
     );
   }
