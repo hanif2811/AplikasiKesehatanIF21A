@@ -2,14 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/KalkulatorKalori.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/firebase_options.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/widgets/KalkulatorKalori.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
-// import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
-// import 'package:tugasakhir_aplikasi_kesehatan/views/login_registrer/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
