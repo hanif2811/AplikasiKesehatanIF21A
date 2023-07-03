@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ui_profile/main.dart';
-import 'package:ui_profile/widgets/profile.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/main.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -50,10 +49,10 @@ class _EditProfileState extends State<EditProfile> {
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => MyHomePage()));
                         },
                         child: const Text("Simpan")),
                   ),
