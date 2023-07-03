@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'circle_button.dart';
-import 'bmi_kalkulator.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/widgets/bmi_kalkulator.dart';
 
 class Home_Screen extends StatelessWidget {
   const Home_Screen({super.key});
