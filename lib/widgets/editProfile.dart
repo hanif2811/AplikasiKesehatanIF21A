@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/main.dart';
 
@@ -9,66 +11,64 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  TextEditingController nama = TextEditingController();
-  TextEditingController alamat = TextEditingController();
-  TextEditingController tBadan = TextEditingController();
-  TextEditingController bBadan = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController noTelfon = TextEditingController();
+  final controllernama = TextEditingController();
+  final controlleralamat = TextEditingController();
+  final controllertBadan = TextEditingController();
+  final controllerbBadan = TextEditingController();
+  final controlleremail = TextEditingController();
+  final controllernoTelfon = TextEditingController();
 
-  void kirimData() {
-    AlertDialog alertDialog = AlertDialog(
-      content: Container(
-        width: 300.0,
-        height: 200.0,
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Nama Lengkap : ${nama.text}",
-                    textAlign: TextAlign.justify),
-                Text("E-Mail : ${email.text}", textAlign: TextAlign.justify),
-                Text("Tanggal Lahir : ${tglLahir.text}",
-                    textAlign: TextAlign.justify),
-                Text("No. Telepon : ${noTelfon.text}",
-                    textAlign: TextAlign.justify),
-                Text("Alamat : ${alamat.text}", textAlign: TextAlign.justify),
-                Text("Tinggi Badan : ${tBadan.text} cm",
-                    textAlign: TextAlign.justify),
-                Text("Berat Badan : ${bBadan.text} kg",
-                    textAlign: TextAlign.justify),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => MyHomePage()));
-                        },
-                        child: const Text("Simpan")),
-                  ),
-                ],
+  void kirimData() async {
+    // Menyimpan data ke dalam Cloud Firestore
+    try {
+      await FirebaseFirestore.instance.collection('users').doc().set({
+        'username': controllernama.text,
+        'email': controlleremail.text,
+        'tanggalLahir': tglLahir.text,
+        'noTelepon': controllernoTelfon.text,
+        'alamat': controlleralamat.text,
+        'tinggiBadan': controllertBadan.text,
+        'beratBadan': controllerbBadan.text,
+      });
+
+      // Tampilkan dialog atau lakukan tindakan lain setelah berhasil menyimpan data
+      showDialog(
+        context: context as BuildContext,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sukses'),
+            content: Text('Data berhasil disimpan.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-    showDialog(
-      context: context as BuildContext,
-      builder: (BuildContext context) {
-        return alertDialog;
-      },
-    );
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      // Tampilkan pesan kesalahan jika terjadi masalah saat menyimpan data
+      showDialog(
+        context: context as BuildContext,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan saat menyimpan data.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   late DateTime date;
@@ -160,9 +160,10 @@ class _EditProfileState extends State<EditProfile> {
                 const SizedBox(height: 10),
                 const Divider(),
                 const SizedBox(height: 20),
-                inputanProfile(judul: "Nama Lengkap", controller1: nama),
+                inputanProfile(
+                    judul: "Nama Lengkap", controller1: controllernama),
                 const SizedBox(height: 20),
-                inputanProfile(judul: "E-Mail", controller1: email),
+                inputanProfile(judul: "E-Mail", controller1: controlleremail),
                 const SizedBox(height: 20),
                 Container(
                   width: 600,
@@ -215,16 +216,18 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                inputanProfile(judul: "No. Telepon", controller1: noTelfon),
+                inputanProfile(
+                    judul: "No. Telepon", controller1: controllernoTelfon),
                 const SizedBox(height: 20),
-                inputanProfile(judul: "Alamat", controller1: alamat),
+                inputanProfile(judul: "Alamat", controller1: controlleralamat),
                 const SizedBox(height: 20),
                 inputanProfile(
                   judul: "Tinggi Badan",
-                  controller1: tBadan,
+                  controller1: controllerbBadan,
                 ),
                 const SizedBox(height: 20),
-                inputanProfile(judul: "Berat Badan", controller1: bBadan),
+                inputanProfile(
+                    judul: "Berat Badan", controller1: controllerbBadan),
                 const SizedBox(height: 30),
               ],
             ),
