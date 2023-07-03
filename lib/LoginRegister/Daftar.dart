@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 
 import '../../widgets/AppBar.dart';
@@ -104,8 +105,10 @@ class _DaftarState extends State<Daftar> {
                               email: email, password: password)
                           .then((value) {
                         print("AKun telah dibuat");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Beranda()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
                       }).onError((error, stackTrace) {
                         print("error ${error.toString()}");
                       });

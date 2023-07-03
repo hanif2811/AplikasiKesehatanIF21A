@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
@@ -125,7 +126,7 @@ class _LoginState extends State<Login> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Beranda()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }).onError((error, stackTrace) {
         print("Error ${error.toString()}");
       });

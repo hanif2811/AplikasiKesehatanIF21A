@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HalamanAwal extends StatefulWidget {
+  const HalamanAwal({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HalamanAwal> createState() => _HalamanAwalState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HalamanAwalState extends State<HalamanAwal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

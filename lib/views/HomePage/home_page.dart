@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/widgets/profile.dart';
 import 'circle_button.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/bmi_kalkulator.dart';
 
@@ -240,7 +241,7 @@ class HomePage extends StatelessWidget {
               break;
             case 2:
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => UserPage()));
+                  context, MaterialPageRoute(builder: (context) => profile()));
               break;
           }
         },

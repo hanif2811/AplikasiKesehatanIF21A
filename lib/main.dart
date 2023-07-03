@@ -8,7 +8,6 @@ import 'package:tugasakhir_aplikasi_kesehatan/widgets/KalkulatorKalori.dart';
 
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/KalkulatorKalori.dart';
 
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
-            return Daftar();
+            return HalamanAwal();
           }),
     );
   }
