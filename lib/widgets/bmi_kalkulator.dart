@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 
-class BMICalculatorApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BMI Calculator',
-      home: BMICalculatorScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
 class BMICalculatorScreen extends StatefulWidget {
   @override
   _BMICalculatorScreenState createState() => _BMICalculatorScreenState();

@@ -10,28 +10,14 @@ List<String> aktifitas = [
 ];
 String pilihAktifitas = "Silahkan Pilih Aktifitas Anda";
 
-void main(List<String> args) {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class kalkulator_kalori extends StatefulWidget {
+  const kalkulator_kalori({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false, home: new myHomePage());
-  }
+  State<kalkulator_kalori> createState() => _kalkulator_kaloriState();
 }
 
-class myHomePage extends StatefulWidget {
-  const myHomePage({super.key});
-
-  @override
-  State<myHomePage> createState() => _myHomePageState();
-}
-
-class _myHomePageState extends State<myHomePage> {
+class _kalkulator_kaloriState extends State<kalkulator_kalori> {
   TextEditingController ageController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
