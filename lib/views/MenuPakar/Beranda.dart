@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Introduction.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/SistemPakar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
@@ -52,7 +53,15 @@ class _BerandaState extends State<Beranda> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: appBarMenuPakar(context),
+        title: GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => (HomePage())));
+              // setState(() {
+              //   _colorcontainer = const Color.fromARGB(255, 190, 190, 190);
+              // });
+            },
+            child: appBarMenuPakar(context)),
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: Colors.transparent,

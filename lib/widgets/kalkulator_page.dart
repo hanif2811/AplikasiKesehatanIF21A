@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_kalkulator.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_tips.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class kalkulator_Page extends StatefulWidget {
+  const kalkulator_Page({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<kalkulator_Page> createState() => _kalkulator_PageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _kalkulator_PageState extends State<kalkulator_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFF1368BB),
-        appBar: AppBar(
-          leading: const Icon(Icons.menu),
-          title: Center(
-              child: Image.asset('Asset/image/logo.png', fit: BoxFit.cover)),
-          backgroundColor: const Color(0xFF1368BB),
-          elevation: 0,
-        ),
         body: ListView(
           children: [
             Container(
