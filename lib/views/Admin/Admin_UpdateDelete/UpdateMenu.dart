@@ -214,6 +214,17 @@ class menuTile extends StatelessWidget {
                       FirebaseFirestore.instance
                           .collection("tambah_menu")
                           .doc(MenuId)
+                          .collection("maps")
+                          .get()
+                          .then((querySnapshot) {
+                        querySnapshot.docs.forEach((doc) {
+                          doc.reference.delete();
+                        });
+                      });
+
+                      FirebaseFirestore.instance
+                          .collection("tambah_menu")
+                          .doc(MenuId)
                           .delete()
                           .then((value) => print("Dokumen berhasil dihapus"))
                           .catchError(

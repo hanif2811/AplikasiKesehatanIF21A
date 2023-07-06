@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/SistemPakar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/AppBar.dart';
 
@@ -24,14 +25,18 @@ class HasilDeteksi extends StatefulWidget {
 
 class _HasilDeteksiState extends State<HasilDeteksi> {
   List<DocumentSnapshot> penangananData = [];
+  List<DocumentSnapshot> mapsData = [];
+
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    fetchData(widget.MenuId);
+    fetchDataPenanganan(widget.MenuId);
+    fetchDataMaps(widget.MenuId);
   }
 
-  Future<void> fetchData(String menuId) async {
+  Future<void> fetchDataPenanganan(String menuId) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection("tambah_menu")
         .doc(menuId)
@@ -39,6 +44,17 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
         .get();
     setState(() {
       penangananData = snapshot.docs;
+    });
+  }
+
+  Future<void> fetchDataMaps(String menuId) async {
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection("tambah_menu")
+        .doc(menuId)
+        .collection("maps")
+        .get();
+    setState(() {
+      mapsData = snapshot.docs;
     });
   }
 
@@ -51,7 +67,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
         title: appBar(context),
         centerTitle: true,
       ),
-      body: penangananData.isEmpty
+      body: penangananData.isEmpty || mapsData.isEmpty
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -85,25 +101,47 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
 
   Widget? penanganan() {
     if (hasil() <= 0.5) {
-      return Solusi(solusi: penangananData[0]["Rendah"], judul: widget.judul);
+      return Solusi(
+        solusi: penangananData[0]["Rendah"],
+        judul: widget.judul,
+        maps: mapsData[0]["listMap"],
+        namaLokasi: mapsData[0]["nama"],
+      );
     } else {
-      return Solusi(solusi: penangananData[0]["Tinggi"], judul: widget.judul);
+      return Solusi(
+        solusi: penangananData[0]["Tinggi"],
+        judul: widget.judul,
+        maps: mapsData[0]["listMap"],
+        namaLokasi: mapsData[0]["nama"],
+      );
     }
   }
 }
 
 class Solusi extends StatelessWidget {
+  final maps;
   final solusi;
   final judul;
-  const Solusi({super.key, required this.solusi, required this.judul});
+  final namaLokasi;
+  const Solusi(
+      {super.key,
+      required this.solusi,
+      required this.judul,
+      required this.maps,
+      required this.namaLokasi});
+
+  Future<void> launherURL(String url) async {
+    final Uri urlParse = Uri.parse(url);
+    if (!await launchUrl(urlParse)) {
+      throw Exception("Tidak bisa melaunch $url");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           Padding(
               padding: const EdgeInsets.only(
@@ -121,6 +159,7 @@ class Solusi extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 10,
@@ -131,12 +170,12 @@ class Solusi extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 17,
                           color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 80, top: 20),
+                        const EdgeInsets.only(left: 19, right: 80, top: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -158,14 +197,18 @@ class Solusi extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0, top: 10),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Center(
                     child: Text(
                       "Apa yang sebaiknya anda lakukan : ",
-                      style: TextStyle(fontSize: 15),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Expanded(
+                  Container(
+                    height: 300,
                     child: ListView.builder(
                         itemCount: solusi.length,
                         itemBuilder: (context, index) {
@@ -176,7 +219,32 @@ class Solusi extends StatelessWidget {
                                 style: TextStyle(fontSize: 15),
                               ));
                         }),
-                  )
+                  ),
+                  Center(
+                      child: Text(
+                    "List Rekomendasi Rujukan Terbaik : ",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  )),
+                  Container(
+                    height: 150,
+                    child: ListView.builder(
+                        itemCount: maps.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: Icon(Icons.local_hospital),
+                            title: GestureDetector(
+                                onTap: () {
+                                  launherURL(maps[index]);
+                                },
+                                child: Text(
+                                  namaLokasi[index],
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline),
+                                )),
+                          );
+                        }),
+                  ),
                 ],
               ),
             ),

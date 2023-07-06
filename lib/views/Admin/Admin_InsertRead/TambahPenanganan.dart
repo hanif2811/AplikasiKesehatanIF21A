@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
-import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
-
+import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahMaps.dart';
 import '../../../services/database.dart';
 
 class TambahPenanganan extends StatefulWidget {
@@ -127,7 +125,8 @@ class _TambahPenangananState extends State<TambahPenanganan> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminBeranda()));
+                              builder: (context) =>
+                                  TambahMaps(menuId: widget.menuId)));
                     }
                   },
                   child: Text("Tambah"),

@@ -4,14 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/firebase_options.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/widgets/KalkulatorKalori.dart';
-
-import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-
-import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

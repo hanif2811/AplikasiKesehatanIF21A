@@ -144,7 +144,6 @@ class _MenuPakarState extends State<MenuPakar> {
                       value: nil,
                       groupValue: hasil,
                       onChanged: (value) {
-                        // Lakukan sesuatu dengan nilai yang dipilih
                         setState(() {
                           hasil = value;
                           jumlah_sementara = double.parse(hasil);
