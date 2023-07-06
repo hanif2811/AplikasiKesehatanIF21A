@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../views/HomePage/home_page.dart';
+
 List<String> aktifitas = [
   "Silahkan Pilih Aktifitas Anda",
   "Kurang aktif",
@@ -138,18 +140,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(
-        title: Image.asset('assets/images/Untitled design (25).png'),
-        centerTitle: true,
-        backgroundColor: Color.fromRGBO(19, 104, 187, 1),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Container(
           height: 500,

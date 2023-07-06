@@ -101,12 +101,7 @@ class _kalkulator_heartRateState extends State<kalkulator_heartRate> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1368BB),
-      appBar: AppBar(
-        title: Center(
-            child: Image.asset('Asset/image/logo.png', fit: BoxFit.cover)),
-        backgroundColor: const Color(0xFF1368BB),
-        elevation: 0,
-      ),
+      appBar: AppBar(),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         // crossAxisAlignment: CrossAxisAlignment.center,

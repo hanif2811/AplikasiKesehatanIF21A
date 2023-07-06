@@ -50,115 +50,113 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-              },
-            ),
-            Text('Kalkulator BMI'),
-          ],
-        ),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(Icons.settings),
-        //     onPressed: () {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(builder: (context) => SettingsScreen()),
-        //       );
-        //     },
-        //   ),
-        // ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 20.0),
-            Text(
-              'Jenis Kelamin',
-              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
+      appBar: AppBar(),
+      body: Center(
+        child: Container(
+          height: 500,
+          width: 330,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Color(0xffFFFFFF)),
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
               children: [
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Pria'),
-                    leading: Radio<int>(
-                      value: 0,
-                      groupValue: _selectedGenderIndex,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedGenderIndex = value!;
-                        });
-                      },
-                    ),
-                  ),
+                Text('Kalkulator BMI'),
+                SizedBox(
+                  height: 16,
                 ),
-                Expanded(
-                  child: ListTile(
-                    title: const Text('Wanita'),
-                    leading: Radio<int>(
-                      value: 1,
-                      groupValue: _selectedGenderIndex,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedGenderIndex = value!;
-                        });
-                      },
+                SizedBox(height: 20.0),
+                Text(
+                  'Jenis Kelamin',
+                  style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('Pria'),
+                        leading: Radio<int>(
+                          value: 0,
+                          groupValue: _selectedGenderIndex,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedGenderIndex = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('Wanita'),
+                        leading: Radio<int>(
+                          value: 1,
+                          groupValue: _selectedGenderIndex,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedGenderIndex = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextField(
+                  controller: _heightController,
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(width: 1.0, color: Colors.black)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(width: 1.0, color: Colors.black)),
+                      label: Text("Berat badan (KG)"),
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                TextField(
+                  controller: _weightController,
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(width: 1.0, color: Colors.black)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(width: 1.0, color: Colors.black)),
+                      label: Text("Berat badan (KG)"),
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _calculateBMI,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromRGBO(255, 237, 0, 1)),
+                  ),
+                  child: Text(
+                    'Hitung',
+                    style: TextStyle(
+                      color: Colors.black,
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
-            Text(
-              'Tinggi Badan (cm)',
-              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            TextField(
-              controller: _heightController,
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Berat Badan (kg)',
-              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            TextField(
-              controller: _weightController,
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _calculateBMI,
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                backgroundColor: Colors.blue,
-              ),
-              child: Text(
-                'Hitung',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -229,11 +227,11 @@ class BMIResultScreen extends StatelessWidget {
                   color: Colors.grey,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Icon(
-                  Icons.arrow_forward,
-                  size: 100.0,
-                  color: Colors.white,
-                ),
+                // child: Icon(
+                //   Icons.arrow_forward,
+                //   size: 100.0,
+                //   color: Colors.white,
+                // ),
               ),
             ),
             SizedBox(height: 20.0),

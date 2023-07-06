@@ -132,37 +132,67 @@ class _HomePageState extends State<HomePage> {
                     label: 'Balita',
                     size: 50,
                     icon: Icons.child_care,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Ibu Hamil',
                     size: 50,
                     icon: Icons.pregnant_woman,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Remaja',
                     size: 50,
                     icon: Icons.face,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Dewasa',
                     size: 50,
                     icon: Icons.person,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Beranda()));
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
                     },
-                    child: CircleButton(
-                      label: 'Lansia',
-                      size: 50,
-                      icon: Icons.people,
-                    ),
+                  ),
+                  CircleButton(
+                    icon: Icons.people,
+                    size: 50,
+                    label: 'Lansia',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Anak-Anak',
                     size: 50,
                     icon: Icons.child_friendly,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                 ],
               ),
