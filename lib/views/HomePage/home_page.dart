@@ -4,6 +4,7 @@ import 'package:tugasakhir_aplikasi_kesehatan/widgets/profile.dart';
 import '../../widgets/AppBar.dart';
 import '../../widgets/kalkulator_page.dart';
 import 'circle_button.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/SportPage/YogaPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -242,7 +243,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CountdownScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 60),
                       shape: RoundedRectangleBorder(
