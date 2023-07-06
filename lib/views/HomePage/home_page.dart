@@ -6,7 +6,6 @@ import '../../widgets/kalkulator_page.dart';
 import 'circle_button.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/SportPage/YogaPage.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -247,12 +246,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-<<<<<<< HEAD
                         MaterialPageRoute(
                             builder: (context) => CountdownScreen()),
-=======
-                        MaterialPageRoute(builder: (context) => CountdownApp()),
->>>>>>> 627bcfd2d8948a04640f9d445064f262def582c0
                       );
                     },
                     style: ElevatedButton.styleFrom(
