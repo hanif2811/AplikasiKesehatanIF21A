@@ -83,7 +83,7 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                   height: 55,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                        image: AssetImage("assets/images/pngwing.com.png"),
+                        image: AssetImage("assets/images/ibm_lagi.png"),
                         fit: BoxFit.cover),
                     border: Border.all(
                         color: const Color.fromARGB(0, 255, 255, 255)),
@@ -92,7 +92,7 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                   ),
                 ),
                 const Text(
-                  "IBM",
+                  "BMI",
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -125,7 +125,7 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                   height: 55,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                        image: AssetImage("assets/images/pngwing.com.png"),
+                        image: AssetImage("assets/images/kalori_logo.png"),
                         fit: BoxFit.cover),
                     border: Border.all(
                         color: const Color.fromARGB(0, 255, 255, 255)),

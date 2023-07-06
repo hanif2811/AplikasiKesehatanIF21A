@@ -1,6 +1,10 @@
+import 'dart:js_interop';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'about.dart';
 import 'editProfile.dart';
 
 class profile extends StatefulWidget {
@@ -11,137 +15,193 @@ class profile extends StatefulWidget {
 }
 
 class _profileState extends State<profile> {
+  late String userId;
+  bool loading = true;
+  void getData() {
+    loading = true;
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      userId = currentUser.uid;
+    }
+    loading = false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 120,
-                width: 120,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: Colors.white, width: 2)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image(
-                      image: AssetImage(
-                          "assets/images/WhatsApp Image 2023-06-29 at 19.25.15.jpeg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "Profile",
-              ),
-              Text(
-                "Percobaan isi profile",
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 200,
-                height: 40,
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditProfile()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 61, 48, 245),
-                        side: BorderSide.none,
-                        shape: const StadiumBorder()),
-                    child: const Text("Edit Profil",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ))),
-              ),
-              const SizedBox(height: 30),
-              const SizedBox(
-                width: 400,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: loading
+          ? CircularProgressIndicator()
+          : SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
                   children: [
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.monitor_weight,
-                          color: Color.fromARGB(255, 61, 48, 245),
-                          size: 50,
-                        ),
-                        Text(
-                          "70 kg",
-                          style: TextStyle(fontSize: 12),
-                        )
-                      ],
+                    SizedBox(
+                      height: 120,
+                      width: 120,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: Colors.black, width: 5)),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Icon(
+                              Icons.person,
+                              size: 100,
+                            )),
+                      ),
                     ),
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          color: Color.fromARGB(255, 61, 48, 245),
-                          size: 50,
-                        ),
-                        Text(
-                          "10-June-2003",
-                          style: TextStyle(fontSize: 12),
-                        )
-                      ],
+                    const SizedBox(height: 10),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(userId)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Text(" ");
+                          }
+                          return Text(snapshot.data?.get("nama_lengkap"));
+                        }),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Column(
-                      children: [
-                        Icon(
-                          Icons.man_outlined,
-                          color: Color.fromARGB(255, 61, 48, 245),
-                          size: 50,
-                        ),
-                        Text(
-                          "170 cm",
-                          style: TextStyle(fontSize: 12),
-                        )
-                      ],
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(userId)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Text(" ");
+                          }
+                          return Text(snapshot.data?.get("email"));
+                        }),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: 200,
+                      height: 40,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfile()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 61, 48, 245),
+                              side: BorderSide.none,
+                              shape: const StadiumBorder()),
+                          child: const Text("Edit Profil",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ))),
                     ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: 400,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Icon(
+                                Icons.monitor_weight,
+                                color: Color.fromARGB(255, 61, 48, 245),
+                                size: 50,
+                              ),
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(userId)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text(" ");
+                                    }
+                                    return Text(
+                                        snapshot.data?.get("beratBadan"));
+                                  })
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Icon(
+                                Icons.calendar_month,
+                                color: Color.fromARGB(255, 61, 48, 245),
+                                size: 50,
+                              ),
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(userId)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text(" ");
+                                    }
+                                    return Text(
+                                        snapshot.data?.get("tanggalLahir"));
+                                  })
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Icon(
+                                Icons.man_outlined,
+                                color: Color.fromARGB(255, 61, 48, 245),
+                                size: 50,
+                              ),
+                              StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(userId)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return Text(" ");
+                                    }
+                                    return Text(
+                                        snapshot.data?.get("tinggiBadan"));
+                                  })
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 10),
+                    profileIcon(
+                      judul: "About",
+                      ikon: Icons.info,
+                      saatTekan: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => about()));
+                      },
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 10),
+                    profileIcon(
+                        judul: "Logout",
+                        ikon: Icons.logout,
+                        saatTekan: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HalamanAwal()));
+                        })
                   ],
                 ),
               ),
-              const Divider(),
-              const SizedBox(height: 10),
-              profileIcon(
-                judul: "Settings",
-                ikon: Icons.settings,
-                saatTekan: () {},
-              ),
-              profileIcon(
-                judul: "User Management",
-                ikon: Icons.manage_accounts,
-                saatTekan: () {},
-              ),
-              profileIcon(
-                judul: "About",
-                ikon: Icons.info,
-                saatTekan: () {},
-              ),
-              const Divider(),
-              const SizedBox(height: 10),
-              profileIcon(
-                  judul: "Logout",
-                  ikon: Icons.logout,
-                  saatTekan: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HalamanAwal()));
-                  })
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

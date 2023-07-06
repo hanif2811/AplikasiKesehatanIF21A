@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../views/HomePage/home_page.dart';
 
+import 'AppBar.dart';
+
 List<String> aktifitas = [
   "Silahkan Pilih Aktifitas Anda",
   "Kurang aktif",
@@ -143,7 +145,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
       appBar: AppBar(),
       body: Center(
         child: Container(
-          height: 500,
+          height: 530,
           width: 330,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: Colors.white),
@@ -151,7 +153,32 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
             padding: const EdgeInsets.all(30.0),
             child: Column(
               children: [
-                Text('Kalkulator Kalori'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Kalkulator",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Color(0xffFFED00),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "Heart Rate",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Color(0xFF1368BB),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 16,
                 ),
