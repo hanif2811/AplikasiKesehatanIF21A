@@ -34,4 +34,15 @@ class DbService {
       print(e.toString());
     });
   }
+
+  Future<void> tambahMaps(Map<String, dynamic> dataMap, String menuId) async {
+    await FirebaseFirestore.instance
+        .collection("tambah_menu")
+        .doc(menuId)
+        .collection("maps")
+        .add(dataMap)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
 }

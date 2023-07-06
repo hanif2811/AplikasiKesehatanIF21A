@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 
 import '../../widgets/AppBar.dart';
 
@@ -14,6 +14,32 @@ class Daftar extends StatefulWidget {
 }
 
 class _DaftarState extends State<Daftar> {
+  Future<void> registerUser(String email, String password, String username,
+      String nama_lengkap) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      String uid = userCredential.user!.uid;
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'username': username,
+        'nama_lengkap': nama_lengkap,
+      });
+      print(
+          'Pengguna berhasil ditambahkan ke Firebase Authentication dan Firestore.');
+    } catch (error) {
+      print('Gagal menambahkan pengguna: $error');
+    }
+  }
+
+  void signUpWithEmailAndPassword(
+      String email, String password, String username, String nama_lengkap) {
+    registerUser(email, password, username, nama_lengkap);
+  }
+
   String email = "";
   String password = "";
   String fullname = "";
@@ -98,20 +124,23 @@ class _DaftarState extends State<Daftar> {
                   width: 400,
                   child: ElevatedButton(
                     onPressed: () {
-                      final auth = FirebaseAuth.instance;
+                      // final auth = FirebaseAuth.instance;
 
-                      auth
-                          .createUserWithEmailAndPassword(
-                              email: email, password: password)
-                          .then((value) {
-                        print("AKun telah dibuat");
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
-                      }).onError((error, stackTrace) {
-                        print("error ${error.toString()}");
-                      });
+                      // auth
+                      //     .createUserWithEmailAndPassword(
+                      //         email: email, password: password)
+                      //     .then((value) {
+                      //   print("AKun telah dibuat");
+
+                      // }).onError((error, stackTrace) {
+                      //   print("error ${error.toString()}");
+                      // });
+
+                      signUpWithEmailAndPassword(
+                          email, password, username, fullname);
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     child: Text("Daftar"),
                     style: ButtonStyle(
