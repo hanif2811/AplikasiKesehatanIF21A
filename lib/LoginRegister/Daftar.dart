@@ -14,7 +14,7 @@ class Daftar extends StatefulWidget {
 }
 
 class _DaftarState extends State<Daftar> {
-  Future<void> registerUser(String email, String password, String username,
+  Future<void> registerUser(String email, String password, String no_telp,
       String nama_lengkap) async {
     try {
       UserCredential userCredential =
@@ -25,8 +25,12 @@ class _DaftarState extends State<Daftar> {
       String uid = userCredential.user!.uid;
 
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'username': username,
+        'no_telp': no_telp,
         'nama_lengkap': nama_lengkap,
+        'email': email,
+        'beratBadan': "",
+        'tinggiBadan': '',
+        'tanggalLahir': ''
       });
       print(
           'Pengguna berhasil ditambahkan ke Firebase Authentication dan Firestore.');
@@ -43,7 +47,7 @@ class _DaftarState extends State<Daftar> {
   String email = "";
   String password = "";
   String fullname = "";
-  String username = "";
+  String no_telp = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,13 +97,13 @@ class _DaftarState extends State<Daftar> {
               ),
               TextFormField(
                 validator: (val) {
-                  return val!.isEmpty ? "username anda kosong" : null;
+                  return val!.isEmpty ? "no telp anda kosong" : null;
                 },
                 decoration: InputDecoration(
-                    label: Text("Masukkan username"),
+                    label: Text("Masukkan no telp"),
                     border: UnderlineInputBorder()),
                 onChanged: (val) {
-                  username = val;
+                  no_telp = val;
                 },
               ),
               SizedBox(
@@ -137,7 +141,7 @@ class _DaftarState extends State<Daftar> {
                       // });
 
                       signUpWithEmailAndPassword(
-                          email, password, username, fullname);
+                          email, password, no_telp, fullname);
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
