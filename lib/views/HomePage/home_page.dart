@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(19, 103, 187, 1),
         title: appBar(context),
@@ -75,7 +76,8 @@ class _HomePageState extends State<HomePage> {
 
   Container HalamanBeranda(BuildContext context) {
     return Container(
-      color: Colors.blue, // Ubah warna background menjadi biru
+      color:
+          Color.fromRGBO(19, 103, 187, 1), // Ubah warna background menjadi biru
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -196,180 +196,182 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Center(
-        child: Container(
-          height: 600,
-          width: MediaQuery.of(context).size.width * 0.95,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        "Kalkulator",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Color(0xffFFED00),
-                          fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            height: 600,
+            width: MediaQuery.of(context).size.width * 0.95,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Text(
+                          "Kalkulator",
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Color(0xffFFED00),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Text(
-                        "Kalori",
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Color(0xFF1368BB),
-                          fontWeight: FontWeight.bold,
+                      Center(
+                        child: Text(
+                          "Kalori",
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Color(0xFF1368BB),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextField(
-                  controller: weightController,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      label: Text("Berat badan (KG)"),
-                      labelStyle: TextStyle(color: Colors.black)),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextField(
-                  controller: heightController,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      label: Text("Tinggi badan (CM)"),
-                      labelStyle: TextStyle(color: Colors.black)),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                TextField(
-                  controller: ageController,
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              BorderSide(width: 1.0, color: Colors.black)),
-                      label: Text("Umur"),
-                      labelStyle: TextStyle(color: Colors.black)),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 16),
-                    Text(
-                      'Level Aktivitas:  ',
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    DropdownButton(
-                      hint: Text(
-                        "Silahkan pilih aktifitas anda",
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextField(
+                    controller: weightController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        label: Text("Berat badan (KG)"),
+                        labelStyle: TextStyle(color: Colors.black)),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextField(
+                    controller: heightController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        label: Text("Tinggi badan (CM)"),
+                        labelStyle: TextStyle(color: Colors.black)),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  TextField(
+                    controller: ageController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide:
+                                BorderSide(width: 1.0, color: Colors.black)),
+                        label: Text("Umur"),
+                        labelStyle: TextStyle(color: Colors.black)),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text(
+                        'Level Aktivitas:  ',
                       ),
-                      icon: Icon(Icons.arrow_drop_down),
-                      value: pilihAktifitas,
-                      items: aktifitas.map((String value) {
-                        return DropdownMenuItem(
-                            value: value,
-                            child: Text(
-                              value,
-                            ));
-                      }).toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          pilihAktifitas = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  "Pilih Jenis Kelamin",
-                  textAlign: TextAlign.start,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Pria",
-                          style: TextStyle(fontSize: 16),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      DropdownButton(
+                        hint: Text(
+                          "Silahkan pilih aktifitas anda",
                         ),
-                        value: "Laki-Laki",
-                        groupValue: jenisKelamin,
-                        onChanged: (value) {
+                        icon: Icon(Icons.arrow_drop_down),
+                        value: pilihAktifitas,
+                        items: aktifitas.map((String value) {
+                          return DropdownMenuItem(
+                              value: value,
+                              child: Text(
+                                value,
+                              ));
+                        }).toList(),
+                        onChanged: (String? value) {
                           setState(() {
-                            jenisKelamin = value!;
+                            pilihAktifitas = value!;
                           });
                         },
                       ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Wanita",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        value: "Perempuan",
-                        groupValue: jenisKelamin,
-                        onChanged: (value) {
-                          setState(() {
-                            jenisKelamin = value!;
-                          });
-                        },
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Pilih Jenis Kelamin",
+                    textAlign: TextAlign.start,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 16,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                    onPressed: kirimData,
-                    child: Text('Calculate'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(
-                              255, 237, 0, 1)), // Mengubah warna tombol
-                      alignment: Alignment.center,
-                      // Memindahkan tombol ke kanan
-                    )),
-              ],
+                      Expanded(
+                        child: RadioListTile(
+                          title: Text(
+                            "Pria",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          value: "Laki-Laki",
+                          groupValue: jenisKelamin,
+                          onChanged: (value) {
+                            setState(() {
+                              jenisKelamin = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: RadioListTile(
+                          title: Text(
+                            "Wanita",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          value: "Perempuan",
+                          groupValue: jenisKelamin,
+                          onChanged: (value) {
+                            setState(() {
+                              jenisKelamin = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                      onPressed: kirimData,
+                      child: Text('Calculate'),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromRGBO(
+                                255, 237, 0, 1)), // Mengubah warna tombol
+                        alignment: Alignment.center,
+                        // Memindahkan tombol ke kanan
+                      )),
+                ],
+              ),
             ),
           ),
         ),
