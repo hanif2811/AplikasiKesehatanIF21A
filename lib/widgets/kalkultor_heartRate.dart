@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
 
-import "AppBar.dart";
-
 class kalkulator_heartRate extends StatefulWidget {
   const kalkulator_heartRate({super.key});
 
