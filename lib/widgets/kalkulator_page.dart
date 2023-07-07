@@ -39,37 +39,28 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
       String beratBadanString = documentSnapshot.get('beratBadan');
       String tinggiBadanString = documentSnapshot.get('tinggiBadan');
 
-      BeratBandan = double.parse(beratBadanString);
-      TinggiBadan = double.parse(tinggiBadanString);
+      if (beratBadanString != "" || tinggiBadanString != "") {
+        BeratBandan = double.parse(beratBadanString);
+        TinggiBadan = double.parse(tinggiBadanString);
 
-      double bmi = BeratBandan! / ((TinggiBadan! / 100) * (TinggiBadan! / 100));
-      if (BeratBandan! > 0 && TinggiBadan! > 0) {
-        if (bmi < 18.5) {
-          kategori = 'Kurus';
-          _rubahwarna = Colors.green;
-        } else if (bmi >= 18.5 && bmi < 25.0) {
-          kategori = 'Normal';
-          _rubahwarna = Colors.blue;
-        } else if (bmi >= 25.0 && bmi < 30.0) {
-          kategori = 'Kegemukan';
-          _rubahwarna = Colors.orange;
-        } else {
-          kategori = 'Obesitas';
-          _rubahwarna = Colors.red;
+        double bmi =
+            BeratBandan! / ((TinggiBadan! / 100) * (TinggiBadan! / 100));
+        if (BeratBandan! > 0 && TinggiBadan! > 0) {
+          if (bmi < 18.5) {
+            kategori = 'Kurus';
+            _rubahwarna = Colors.green;
+          } else if (bmi >= 18.5 && bmi < 25.0) {
+            kategori = 'Normal';
+            _rubahwarna = Colors.blue;
+          } else if (bmi >= 25.0 && bmi < 30.0) {
+            kategori = 'Kegemukan';
+            _rubahwarna = Colors.orange;
+          } else {
+            kategori = 'Obesitas';
+            _rubahwarna = Colors.red;
+          }
         }
-      } else if (BeratBandan.isNull && TinggiBadan.isNull) {
-        BeratBandan = 0;
-        kategori = "isi data";
-        InkWell(
-          onTap: () {
-            setState(() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfile()));
-            });
-          },
-          child: const Text('Masukan Data >'),
-        );
-      } else {}
+      }
     });
   }
 
@@ -250,8 +241,9 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
             Container(
               height: 200,
               child: StreamBuilder(
-                stream:
-                    FirebaseFirestore.instance.collection("iklan").snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection("TipsTrik")
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.data == null) {
                     return Text("Tunggu");
@@ -266,7 +258,8 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
                             background: snapshot.data?.docs[Index]
                                 ["background"],
                             ID: snapshot.data?.docs[Index]["ID"],
-                            url: snapshot.data?.docs[Index]["url"],
+                            url: snapshot.data?.docs[Index]["konten"],
+                            Judul: snapshot.data?.docs[Index]["Judul"],
                           );
                         });
                   }
@@ -282,12 +275,14 @@ class TipsnTrik extends StatelessWidget {
   final ID;
   final background;
   final url;
+  final Judul;
 
   const TipsnTrik(
       {super.key,
       required this.ID,
       required this.background,
-      required this.url});
+      required this.url,
+      required this.Judul});
 
   Future<void> launherURL(String url) async {
     final Uri urlParse = Uri.parse(url);
@@ -300,13 +295,18 @@ class TipsnTrik extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => launherURL(url),
-      child: Container(
-        width: 300,
-        margin: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-                image: NetworkImage(background), fit: BoxFit.cover)),
+      child: Column(
+        children: [
+          Container(
+            width: 300,
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                image: DecorationImage(
+                    image: NetworkImage(background), fit: BoxFit.cover)),
+          ),
+          Text(Judul)
+        ],
       ),
     );
   }

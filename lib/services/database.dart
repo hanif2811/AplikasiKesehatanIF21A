@@ -56,4 +56,15 @@ class DbService {
       print(e.toString());
     });
   }
+
+  Future<void> tambahTipsTrik(
+      Map<String, dynamic> dataTips, String TipsId) async {
+    await FirebaseFirestore.instance
+        .collection("TipsTrik")
+        .doc(TipsId)
+        .set(dataTips)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
 }
