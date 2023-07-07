@@ -1,7 +1,3 @@
-import 'dart:html';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DbService {
@@ -45,6 +41,17 @@ class DbService {
         .doc(menuId)
         .collection("maps")
         .add(dataMap)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  Future<void> tambahIklan(
+      Map<String, dynamic> dataIklan, String iklanId) async {
+    await FirebaseFirestore.instance
+        .collection("iklan")
+        .doc(iklanId)
+        .set(dataIklan)
         .catchError((e) {
       print(e.toString());
     });
