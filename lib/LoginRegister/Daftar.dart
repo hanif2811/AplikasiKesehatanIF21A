@@ -146,7 +146,6 @@ class _DaftarState extends State<Daftar> {
                       signUpWithEmailAndPassword(
                           email, password, no_telp, fullname);
 
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Login()),
@@ -176,24 +175,6 @@ class _DaftarState extends State<Daftar> {
                 ),
               ),
               SizedBox(height: 10),
-
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Login()));
-                    },
-                    child: Text("Daftar"),
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.blue),
-                        foregroundColor: MaterialStatePropertyAll(
-                            Color.fromARGB(255, 2, 54, 97)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 2, 54, 97))))),
-                  )),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
