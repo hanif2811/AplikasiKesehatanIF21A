@@ -2,10 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../views/HomePage/home_page.dart';
-
-import 'AppBar.dart';
-
 List<String> aktifitas = [
   "Silahkan Pilih Aktifitas Anda",
   "Kurang aktif",
@@ -145,24 +141,17 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
 
   void getDataFromFirestore() async {
     try {
-      // Mendapatkan user ID saat ini dari Firebase Authentication
-
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
         userId = currentUser.uid;
 
-        // Mengakses dokumen pengguna dari koleksi "users" berdasarkan user ID
         DocumentSnapshot documentSnapshot =
             await _firestore.collection('users').doc(userId).get();
         Map<String, dynamic> userData =
             documentSnapshot.data() as Map<String, dynamic>;
 
-        // Mengambil nilai notelfon dan username dari userData
-
         String beratBadan = userData['beratBadan'];
         String tinggiBadan = userData['tinggiBadan'];
-
-        // Mengupdate nilai-nilai pada TextEditingController sesuai dengan data yang diambil dari Firestore
 
         weightController.text = beratBadan;
         heightController.text = tinggiBadan;
@@ -202,8 +191,8 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
       appBar: AppBar(),
       body: Center(
         child: Container(
-          height: 530,
-          width: 330,
+          height: 600,
+          width: MediaQuery.of(context).size.width * 0.95,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: Colors.white),
           child: Padding(
