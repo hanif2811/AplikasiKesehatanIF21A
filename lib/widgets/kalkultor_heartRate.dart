@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+import "AppBar.dart";
+
 class kalkulator_heartRate extends StatefulWidget {
   const kalkulator_heartRate({super.key});
 
@@ -101,151 +103,169 @@ class _kalkulator_heartRateState extends State<kalkulator_heartRate> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1368BB),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: appBar(context),
+        backgroundColor: const Color(0xFF1368BB),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-            height: 322,
-            decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xffFFFFFF)),
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xffFFFFFF),
-            ),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 15),
-                        child: Center(
-                          child: Text(
-                            "Kalkulator",
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Color(0xffFFED00),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 15, left: 5),
-                        child: Center(
-                          child: Text(
-                            "Heart Rate",
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Color(0xFF1368BB),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.black,
-                        label: const Text("Umur"),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                      ),
-                      controller: Umur,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      "*masukan umur anda",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 185, 185, 185),
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          fillColor: Colors.black,
-                          label: const Text("Detak jantung permenit"),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                      controller: DetakJantung,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 21, right: 21, bottom: 15),
-                    child: Text(
-                      "*Hitung detang jantung anda dengan stop wacth dalam 1 menit",
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 150, 150, 150)),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SizedBox(
-                        height: 38,
-                        width: 138,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: const Color(0xffFFED00),
-                              onPrimary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25))),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: Colors.black,
-                                    title: const Text(
-                                      "Detak Jantung anda",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    content: Center(
-                                        child: Text("" + consthasil.text,
-                                            style: const TextStyle(
-                                                color: Colors.white))),
-                                    actions: [
-                                      TextButton(
-                                        child: const Text("OK"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
-                            setState(() {
-                              heartrate();
-                            });
-                          },
-                          child: const SizedBox(
-                            width: 120,
-                            child: Center(
-                                child: Text(
-                              "Hitung",
+          Center(
+            child: Container(
+              margin: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+              height: 329,
+              width: 330,
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xffFFFFFF)),
+                borderRadius: BorderRadius.circular(20),
+                color: const Color(0xffFFFFFF),
+              ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Center(
+                            child: Text(
+                              "Kalkulator",
                               style: TextStyle(
-                                  fontSize: 19, fontWeight: FontWeight.bold),
-                            )),
+                                fontSize: 24,
+                                color: Color(0xffFFED00),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 15, left: 5),
+                          child: Center(
+                            child: Text(
+                              "Heart Rate",
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Color(0xFF1368BB),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                    width: 1.0, color: Colors.black)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                    width: 1.0, color: Colors.black)),
+                            label: Text("Umur"),
+                            labelStyle: TextStyle(color: Colors.black)),
+                        controller: Umur,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "*masukan umur anda",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 185, 185, 185),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                    width: 1.0, color: Colors.black)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                    width: 1.0, color: Colors.black)),
+                            label: Text("Umur"),
+                            labelStyle: TextStyle(color: Colors.black)),
+                        controller: DetakJantung,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 21, right: 21, bottom: 15),
+                      child: Text(
+                        "*Hitung detang jantung anda dengan stop wacth dalam 1 menit",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 150, 150, 150)),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: SizedBox(
+                          height: 38,
+                          width: 138,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: const Color(0xffFFED00),
+                                onPrimary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25))),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      backgroundColor: Colors.black,
+                                      title: const Text(
+                                        "Detak Jantung anda",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      content: Center(
+                                          child: Text("" + consthasil.text,
+                                              style: const TextStyle(
+                                                  color: Colors.white))),
+                                      actions: [
+                                        TextButton(
+                                          child: const Text("OK"),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                              setState(() {
+                                heartrate();
+                              });
+                            },
+                            child: const SizedBox(
+                              width: 120,
+                              child: Center(
+                                  child: Text(
+                                "Hitung",
+                                style: TextStyle(
+                                    fontSize: 19, fontWeight: FontWeight.bold),
+                              )),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                ]),
+                    )
+                  ]),
+            ),
           )
 
           // TextField(

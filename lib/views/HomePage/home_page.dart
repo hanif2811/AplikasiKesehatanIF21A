@@ -107,89 +107,130 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding:
-                  EdgeInsets.only(top: 40, bottom: 20, right: 20, left: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: GridView.count(
-                crossAxisCount: 3, // Jumlah kolom
-                shrinkWrap: true,
-                physics:
-                    NeverScrollableScrollPhysics(), // Agar GridView tidak dapat discroll
-                children: [
-                  CircleButton(
-                    label: 'Balita',
-                    size: 50,
-                    icon: Icons.child_care,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
+            Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      EdgeInsets.only(top: 0, bottom: 20, right: 20, left: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  CircleButton(
-                    label: 'Ibu Hamil',
-                    size: 50,
-                    icon: Icons.pregnant_woman,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                          height: 27,
+                          width: 130,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: const Color(0xff1368BB)),
+                              borderRadius: BorderRadius.circular(25),
+                              color: Color(0xff1368BB)),
+                          child: Center(
+                            child: Text(
+                              "Sistem Pakar",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          GridView.count(
+                            crossAxisCount: 3, // Jumlah kolom
+                            shrinkWrap: true,
+                            physics:
+                                NeverScrollableScrollPhysics(), // Agar GridView tidak dapat discroll
+                            children: [
+                              CircleButton(
+                                label: 'Balita',
+                                size: 50,
+                                icon: Icons.child_care,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                              CircleButton(
+                                label: 'Ibu Hamil',
+                                size: 50,
+                                icon: Icons.pregnant_woman,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                              CircleButton(
+                                label: 'Remaja',
+                                size: 50,
+                                icon: Icons.face,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                              CircleButton(
+                                label: 'Dewasa',
+                                size: 50,
+                                icon: Icons.person,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                              CircleButton(
+                                icon: Icons.people,
+                                size: 50,
+                                label: 'Lansia',
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                              CircleButton(
+                                label: 'Anak-Anak',
+                                size: 50,
+                                icon: Icons.child_friendly,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Beranda()),
+                                  );
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  CircleButton(
-                    label: 'Remaja',
-                    size: 50,
-                    icon: Icons.face,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
-                  ),
-                  CircleButton(
-                    label: 'Dewasa',
-                    size: 50,
-                    icon: Icons.person,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
-                  ),
-                  CircleButton(
-                    icon: Icons.people,
-                    size: 50,
-                    label: 'Lansia',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
-                  ),
-                  CircleButton(
-                    label: 'Anak-Anak',
-                    size: 50,
-                    icon: Icons.child_friendly,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Beranda()),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             SizedBox(height: 10),
             Container(

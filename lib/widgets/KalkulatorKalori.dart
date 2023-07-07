@@ -1,8 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../views/HomePage/home_page.dart';
-
-import 'AppBar.dart';
 
 List<String> aktifitas = [
   "Silahkan Pilih Aktifitas Anda",
@@ -138,15 +136,68 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
 
   String jenisKelamin = "";
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late String userId;
+
+  void getDataFromFirestore() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        userId = currentUser.uid;
+
+        DocumentSnapshot documentSnapshot =
+            await _firestore.collection('users').doc(userId).get();
+        Map<String, dynamic> userData =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        String beratBadan = userData['beratBadan'];
+        String tinggiBadan = userData['tinggiBadan'];
+
+        weightController.text = beratBadan;
+        heightController.text = tinggiBadan;
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan saat mengambil data.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDataFromFirestore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: appBar(context),
+        backgroundColor: const Color(0xFF1368BB),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: Center(
         child: Container(
-          height: 530,
-          width: 330,
+          height: 600,
+          width: MediaQuery.of(context).size.width * 0.95,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: Colors.white),
           child: Padding(
@@ -169,7 +220,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                     ),
                     Center(
                       child: Text(
-                        "Heart Rate",
+                        "Kalori",
                         style: TextStyle(
                           fontSize: 24,
                           color: Color(0xFF1368BB),

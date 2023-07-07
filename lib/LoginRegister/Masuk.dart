@@ -186,7 +186,8 @@ class _LoginState extends State<Login> {
       auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        Navigator.push(
+
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       }).onError((error, stackTrace) {
         final snackBar = SnackBar(
