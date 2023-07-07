@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 
+import 'AppBar.dart';
+
 class BMICalculatorScreen extends StatefulWidget {
   @override
   _BMICalculatorScreenState createState() => _BMICalculatorScreenState();
@@ -51,7 +53,12 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: appBar(context),
+        backgroundColor: const Color(0xFF1368BB),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: Center(
         child: Container(
           height: 500,
@@ -63,7 +70,32 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
             padding: const EdgeInsets.all(30.0),
             child: Column(
               children: [
-                Text('Kalkulator BMI'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        "Kalkulator",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Color(0xffFFED00),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "BMI",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Color(0xFF1368BB),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 16,
                 ),
@@ -120,7 +152,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                           borderRadius: BorderRadius.circular(20),
                           borderSide:
                               BorderSide(width: 1.0, color: Colors.black)),
-                      label: Text("Berat badan (KG)"),
+                      label: Text("Tinggi Badan (CM)"),
                       labelStyle: TextStyle(color: Colors.black)),
                 ),
                 SizedBox(

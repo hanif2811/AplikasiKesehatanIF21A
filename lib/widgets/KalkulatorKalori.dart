@@ -188,7 +188,12 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: appBar(context),
+        backgroundColor: const Color(0xFF1368BB),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: Center(
         child: Container(
           height: 600,
