@@ -35,7 +35,7 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
 
   void navigateToNextPage() {
     _timer?.cancel();
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => NextPage()),
     );
@@ -231,7 +231,7 @@ class _NextPageState extends State<NextPage> with CountdownMixin<NextPage> {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageThree()),
@@ -336,7 +336,7 @@ class _NextPageStateThree extends State<NextPageThree>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageFour()),
@@ -441,7 +441,7 @@ class _NextPageStateFour extends State<NextPageFour>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageFive()),
@@ -546,7 +546,7 @@ class _NextPageStateFive extends State<NextPageFive>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageSix()),
@@ -651,7 +651,7 @@ class _NextPageStateSix extends State<NextPageSix>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageSeven()),
@@ -756,7 +756,7 @@ class _NextPageStateSeven extends State<NextPageSeven>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => NextPageEight()),
@@ -861,7 +861,7 @@ class _NextPageStateEight extends State<NextPageEight>
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => Finish()),
                         );
@@ -936,7 +936,7 @@ class _Finish extends State<Finish> {
                       SizedBox(height: 70),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
                           );

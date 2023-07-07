@@ -134,17 +134,19 @@ class _resetPasswordState extends State<resetPassword> {
               SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    changePassword(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 61, 48, 245),
-                      side: BorderSide.none,
-                      fixedSize:
-                          Size(MediaQuery.of(context).size.width * 0.8, 40),
-                      shape: const StadiumBorder()),
-                  child: Text("Ubah kata sandi"))
+              Center(
+                child: ElevatedButton(
+                    onPressed: () {
+                      changePassword(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 61, 48, 245),
+                        side: BorderSide.none,
+                        fixedSize:
+                            Size(MediaQuery.of(context).size.width * 0.8, 40),
+                        shape: const StadiumBorder()),
+                    child: Text("Ubah kata sandi")),
+              )
             ],
           ),
         ),

@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -158,7 +156,6 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
                                 return AlertDialog(
                                   title: Text("Tinggi badan : $TinggiBadan"
                                       "\nBerat Badan : $BeratBandan"
-                                      "\nUmur : $umur"
                                       "\nKategori : $kategori"),
                                   actions: [
                                     TextButton(
@@ -226,16 +223,6 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 30, 20, 0),
-                  child: Text(
-                    "Lihat semua >",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  ),
-                )
               ],
             ),
             Container(
@@ -295,18 +282,28 @@ class TipsnTrik extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => launherURL(url),
-      child: Column(
-        children: [
-          Container(
-            width: 300,
-            margin: EdgeInsets.all(20),
+      child: Container(
+        width: 300,
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+                image: NetworkImage(background), fit: BoxFit.cover)),
+        child: Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                image: DecorationImage(
-                    image: NetworkImage(background), fit: BoxFit.cover)),
-          ),
-          Text(Judul)
-        ],
+                color: Colors.black54, borderRadius: BorderRadius.circular(30)),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    Judul,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ])),
       ),
     );
   }

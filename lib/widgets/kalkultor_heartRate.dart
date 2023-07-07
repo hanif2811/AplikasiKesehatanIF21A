@@ -198,7 +198,7 @@ class _kalkulator_heartRateState extends State<kalkulator_heartRate> {
                                 borderRadius: BorderRadius.circular(20),
                                 borderSide: BorderSide(
                                     width: 1.0, color: Colors.black)),
-                            label: Text("Umur"),
+                            label: Text("Detak Jantung"),
                             labelStyle: TextStyle(color: Colors.black)),
                         controller: DetakJantung,
                       ),
