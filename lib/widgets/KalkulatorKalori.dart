@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../views/HomePage/home_page.dart';
+
 import 'AppBar.dart';
 
 List<String> aktifitas = [
@@ -197,12 +199,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(
-        centerTitle: true,
-        title: appBar(context),
-        backgroundColor: const Color(0xFF1368BB),
-        elevation: 0,
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Container(
           height: 530,

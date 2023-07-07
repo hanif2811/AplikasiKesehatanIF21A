@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/AppBar.dart';
 import '../../widgets/kalkulator_page.dart';
 import 'circle_button.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/SportPage/YogaPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -79,37 +82,28 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 200,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Container(
-                    width: 300,
-                    margin: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(child: Text('Widget 1')),
-                  ),
-                  Container(
-                    width: 300,
-                    margin: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(child: Text('Widget 2')),
-                  ),
-                  Container(
-                    width: 300,
-                    margin: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(child: Text('Widget 3')),
-                  ),
-                ],
+              child: StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection("iklan").snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Text("Tunggu");
+                  } else if (snapshot.hasError) {
+                    return Text("Ada error, Tunggu");
+                  } else {
+                    return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, Index) {
+                          return TipsnTrik(
+                            background: snapshot.data?.docs[Index]
+                                ["background"],
+                            ID: snapshot.data?.docs[Index]["ID"],
+                            url: snapshot.data?.docs[Index]["url"],
+                          );
+                        });
+                  }
+                },
               ),
             ),
             SizedBox(height: 20),
@@ -132,37 +126,67 @@ class _HomePageState extends State<HomePage> {
                     label: 'Balita',
                     size: 50,
                     icon: Icons.child_care,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Ibu Hamil',
                     size: 50,
                     icon: Icons.pregnant_woman,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Remaja',
                     size: 50,
                     icon: Icons.face,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Dewasa',
                     size: 50,
                     icon: Icons.person,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Beranda()));
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
                     },
-                    child: CircleButton(
-                      label: 'Lansia',
-                      size: 50,
-                      icon: Icons.people,
-                    ),
+                  ),
+                  CircleButton(
+                    icon: Icons.people,
+                    size: 50,
+                    label: 'Lansia',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                   CircleButton(
                     label: 'Anak-Anak',
                     size: 50,
                     icon: Icons.child_friendly,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Beranda()),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -212,7 +236,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CountdownScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 60),
                       shape: RoundedRectangleBorder(
@@ -228,6 +258,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  )
                 ],
               ),
             ),
@@ -238,17 +271,35 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class UserPage extends StatelessWidget {
+class TipsnTrik extends StatelessWidget {
+  final ID;
+  final background;
+  final url;
+
+  const TipsnTrik(
+      {super.key,
+      required this.ID,
+      required this.background,
+      required this.url});
+
+  Future<void> launherURL(String url) async {
+    final Uri urlParse = Uri.parse(url);
+    if (!await launchUrl(urlParse)) {
+      throw Exception("Tidak bisa melaunch $url");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Users'),
-      ),
-      body: Container(
-        child: Center(
-          child: Text('Hai Asep !'),
-        ),
+    return GestureDetector(
+      onTap: () => launherURL(url),
+      child: Container(
+        width: 300,
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+                image: NetworkImage(background), fit: BoxFit.cover)),
       ),
     );
   }

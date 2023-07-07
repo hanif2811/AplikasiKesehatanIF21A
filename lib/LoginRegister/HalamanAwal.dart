@@ -25,7 +25,7 @@ class _HalamanAwalState extends State<HalamanAwal> {
               height: 400,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/logo.png"),
+                    image: AssetImage("assets/images/logoo.png"),
                     fit: BoxFit.contain),
               ),
             ),

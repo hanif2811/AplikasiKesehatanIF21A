@@ -45,4 +45,15 @@ class DbService {
       print(e.toString());
     });
   }
+
+  Future<void> tambahIklan(
+      Map<String, dynamic> dataIklan, String iklanId) async {
+    await FirebaseFirestore.instance
+        .collection("iklan")
+        .doc(iklanId)
+        .set(dataIklan)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
 }

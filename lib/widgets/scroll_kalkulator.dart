@@ -40,8 +40,8 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    image: const DecorationImage(
-                        image: AssetImage("Assets/images/pngwing.com.png"),
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/pngwing.png"),
                         fit: BoxFit.cover),
                     border: Border.all(
                         color: const Color.fromARGB(0, 255, 255, 255)),
@@ -82,7 +82,7 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    image: const DecorationImage(
+                    image: DecorationImage(
                         image: AssetImage("assets/images/ibm_lagi.png"),
                         fit: BoxFit.cover),
                     border: Border.all(
@@ -124,7 +124,7 @@ class _scrol_kalkulatorState extends State<scrol_kalkulator> {
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    image: const DecorationImage(
+                    image: DecorationImage(
                         image: AssetImage("assets/images/kalori_logo.png"),
                         fit: BoxFit.cover),
                     border: Border.all(
