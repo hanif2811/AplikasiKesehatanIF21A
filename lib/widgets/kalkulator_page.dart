@@ -1,7 +1,14 @@
+import 'dart:js_interop';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_kalkulator.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_tips.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'editProfile.dart';
 
 class kalkulator_Page extends StatefulWidget {
   const kalkulator_Page({super.key});
@@ -11,37 +18,78 @@ class kalkulator_Page extends StatefulWidget {
 }
 
 class _kalkulator_PageState extends State<kalkulator_Page> {
-  double BeratBandan = 80;
-  double TinggiBadan = 170;
+  double? BeratBandan = 0;
+  double? TinggiBadan = 0;
   int umur = 17;
   String kategori = "";
   String warna = "";
   Color _rubahwarna = Colors.black;
+  late String userId;
+  bool loading = true;
+
+  void getDataFromFirebase() async {
+    // Mendapatkan referensi Firestore
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Mendapatkan dokumen dari koleksi yang sesuai
+    var documentSnapshot =
+        await firestore.collection('users').doc(userId).get();
+
+    setState(() {
+      String beratBadanString = documentSnapshot.get('beratBadan');
+      String tinggiBadanString = documentSnapshot.get('tinggiBadan');
+
+      BeratBandan = double.parse(beratBadanString);
+      TinggiBadan = double.parse(tinggiBadanString);
+
+      double bmi = BeratBandan! / ((TinggiBadan! / 100) * (TinggiBadan! / 100));
+      if (BeratBandan! > 0 && TinggiBadan! > 0) {
+        if (bmi < 18.5) {
+          kategori = 'Kurus';
+          _rubahwarna = Colors.green;
+        } else if (bmi >= 18.5 && bmi < 25.0) {
+          kategori = 'Normal';
+          _rubahwarna = Colors.blue;
+        } else if (bmi >= 25.0 && bmi < 30.0) {
+          kategori = 'Kegemukan';
+          _rubahwarna = Colors.orange;
+        } else {
+          kategori = 'Obesitas';
+          _rubahwarna = Colors.red;
+        }
+      } else if (BeratBandan.isNull && TinggiBadan.isNull) {
+        BeratBandan = 0;
+        kategori = "isi data";
+        InkWell(
+          onTap: () {
+            setState(() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile()));
+            });
+          },
+          child: const Text('Masukan Data >'),
+        );
+      } else {}
+    });
+  }
+
+  void getData() {
+    loading = true;
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      userId = currentUser.uid;
+    }
+    loading = false;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
-    kegemukan();
+    getData();
+    getDataFromFirebase();
+    // kegemukan();
+
     super.initState();
-  }
-
-  void kegemukan() {
-    if (TinggiBadan > 0 && BeratBandan > 0) {
-      double bmi = BeratBandan / ((TinggiBadan / 100) * (TinggiBadan / 100));
-
-      if (bmi < 18.5) {
-        kategori = 'Kurus';
-        _rubahwarna = Colors.green;
-      } else if (bmi >= 18.5 && bmi < 25.0) {
-        kategori = 'Normal';
-        _rubahwarna = Colors.blue;
-      } else if (bmi >= 25.0 && bmi < 30.0) {
-        kategori = 'Kegemukan';
-        _rubahwarna = Colors.orange;
-      } else {
-        kategori = 'Obesitas';
-        _rubahwarna = Colors.red;
-      }
-    }
   }
 
   Widget build(BuildContext context) {
@@ -70,9 +118,24 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(33, 10, 0, 0),
-                    child: Text("$BeratBandan",
-                        style: TextStyle(fontSize: 31),
-                        textAlign: TextAlign.left),
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(userId)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Text(
+                              " ",
+                            );
+                          }
+                          final beratBadan =
+                              snapshot.data?.get("beratBadan") ?? "";
+                          return Text(
+                            beratBadan,
+                            style: TextStyle(fontSize: 31),
+                          );
+                        }),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(33, 10, 0, 0),
@@ -184,8 +247,67 @@ class _kalkulator_PageState extends State<kalkulator_Page> {
                 )
               ],
             ),
-            const Tipsandtrik()
+            Container(
+              height: 200,
+              child: StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection("iklan").snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Text("Tunggu");
+                  } else if (snapshot.hasError) {
+                    return Text("Ada error, Tunggu");
+                  } else {
+                    return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data?.docs.length,
+                        itemBuilder: (context, Index) {
+                          return TipsnTrik(
+                            background: snapshot.data?.docs[Index]
+                                ["background"],
+                            ID: snapshot.data?.docs[Index]["ID"],
+                            url: snapshot.data?.docs[Index]["url"],
+                          );
+                        });
+                  }
+                },
+              ),
+            ),
           ],
         ));
+  }
+}
+
+class TipsnTrik extends StatelessWidget {
+  final ID;
+  final background;
+  final url;
+
+  const TipsnTrik(
+      {super.key,
+      required this.ID,
+      required this.background,
+      required this.url});
+
+  Future<void> launherURL(String url) async {
+    final Uri urlParse = Uri.parse(url);
+    if (!await launchUrl(urlParse)) {
+      throw Exception("Tidak bisa melaunch $url");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => launherURL(url),
+      child: Container(
+        width: 300,
+        margin: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            image: DecorationImage(
+                image: NetworkImage(background), fit: BoxFit.cover)),
+      ),
+    );
   }
 }

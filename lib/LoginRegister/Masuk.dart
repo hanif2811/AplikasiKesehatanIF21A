@@ -126,7 +126,7 @@ class _LoginState extends State<Login> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Beranda()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }).onError((error, stackTrace) {
         final snackBar = SnackBar(
           content: Text("Username atau paswword salah"),
