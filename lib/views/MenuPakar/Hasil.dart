@@ -175,26 +175,29 @@ class Solusi extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 19, right: 80, top: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Kemungkinan anda terkena " +
-                              (hasil() * 100).toStringAsFixed(1) +
-                              " %",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
+                        const EdgeInsets.only(left: 19, right: 50, top: 20),
+                    child: Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Kemungkinan anda terkena " +
+                                (hasil() * 100).toStringAsFixed(1) +
+                                " %",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        CircularProgressIndicator(
-                          value: hasil(),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              _warnaresiko(hasil())),
-                          backgroundColor: Colors.grey[300],
-                        ),
-                      ],
+                          SizedBox(width: 10),
+                          CircularProgressIndicator(
+                            value: hasil(),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                _warnaresiko(hasil())),
+                            backgroundColor: Colors.grey[300],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(

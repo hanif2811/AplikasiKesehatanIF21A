@@ -39,7 +39,7 @@ class _aboutState extends State<about> {
               Container(
                   width: 400,
                   child: Text(
-                    """Healthy kuy merupakan aplikasi kesehatan yang dibuat dengan sistem pakar dengan tujuan agar user dapat mengidentifikasi penyakit yang diderita oleh user karena pada aplikasi ini tersedia berbagai macam gejala yang telah ditulis oleh pakar untuk diidentifikasi apakah user itu mengidap penyakit tersebut atau tidak.
+                    """Healthy kuy merupakan aplikasi kesehatan yang dibuat dengan tujuan agar user dapat mengidentifikasi penyakit yang diderita oleh user karena pada aplikasi ini tersedia berbagai macam gejala yang telah ditulis oleh pakar untuk diidentifikasi apakah user itu mengidap penyakit tersebut atau tidak.
 
 Dibuat oleh:
 Hanif Hidayatulloh (21SA1068)

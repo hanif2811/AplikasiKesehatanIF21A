@@ -143,8 +143,8 @@ class _DaftarState extends State<Daftar> {
                       signUpWithEmailAndPassword(
                           email, password, no_telp, fullname);
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: Text("Daftar"),
                     style: ButtonStyle(
