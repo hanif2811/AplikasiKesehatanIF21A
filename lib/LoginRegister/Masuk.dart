@@ -18,13 +18,16 @@ class _LoginState extends State<Login> {
   final _formkey1 = GlobalKey<FormState>();
   String email = "";
   String password = "";
+  bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: appBar(context),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(0, 0, 174, 255),
         elevation: 0.0,
         centerTitle: true,
       ),
@@ -35,64 +38,122 @@ class _LoginState extends State<Login> {
           key: _formkey1,
           child: Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 150,
+                Container(
+                    child: Image.network(
+                        'https://png.pngtree.com/png-vector/20220712/ourmid/pngtree-doctor-talking-to-patient-via-internet-png-image_5930390.png'),
+                    height: 300,
+                    width: 300),
+                SizedBox(height: 20),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Jangan kosongi email anda';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Masukkan Email",
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(Icons.person),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    onChanged: (val) {
+                      email = val;
+                    },
+                  ),
                 ),
-                TextFormField(
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'Jangan kosongi email anda';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      label: Text("Masukkan email"),
-                      border: UnderlineInputBorder()),
-                  onChanged: (val) {
-                    email = val;
-                  },
+                SizedBox(height: 20),
+                Container(
+                  width: 400,
+                  child: TextFormField(
+                    textInputAction: TextInputAction.done,
+                    obscureText:
+                        _obscureText, // variabel untuk mengontrol apakah password tersembunyi atau tidak
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return 'Jangan kosongi Password anda';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Masukkan Password",
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Icon(Icons.lock),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(_obscureText
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    onChanged: (val) {
+                      password = val;
+                    },
+                  ),
                 ),
-                SizedBox(
-                  height: 10,
+                SizedBox(height: 20),
+                Container(
+                  width: 400,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      login();
+                    },
+                    child: Text(
+                      "Masuk",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(
+                              color: Color.fromARGB(255, 255, 255, 255)),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                TextFormField(
-                  obscureText: true,
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'Jangan kosongi Password anda';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                      label: Text("Masukkan password"),
-                      border: UnderlineInputBorder()),
-                  onChanged: (val) {
-                    password = val;
-                  },
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                SizedBox(
-                    width: 400,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        login();
-                      },
-                      child: Text("Masuk"),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.blue),
-                          foregroundColor: MaterialStatePropertyAll(
-                              Color.fromARGB(255, 2, 54, 97)),
-                          shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(
-                                      color: Color.fromARGB(255, 2, 54, 97))))),
-                    )),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -126,7 +187,7 @@ class _LoginState extends State<Login> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Beranda()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }).onError((error, stackTrace) {
         final snackBar = SnackBar(
           content: Text("Username atau paswword salah"),
