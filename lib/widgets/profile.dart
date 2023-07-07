@@ -1,9 +1,8 @@
-import 'dart:js_interop';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/widgets/ResetPassword.dart';
 import 'about.dart';
 import 'editProfile.dart';
 
@@ -106,7 +105,7 @@ class _profileState extends State<profile> {
                     ),
                     const SizedBox(height: 30),
                     SizedBox(
-                      width: 400,
+                      width: 350,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -127,7 +126,8 @@ class _profileState extends State<profile> {
                                       return Text(" ");
                                     }
                                     return Text(
-                                        snapshot.data?.get("beratBadan"));
+                                        snapshot.data?.get("beratBadan") +
+                                            " Kg");
                                   })
                             ],
                           ),
@@ -169,7 +169,8 @@ class _profileState extends State<profile> {
                                       return Text(" ");
                                     }
                                     return Text(
-                                        snapshot.data?.get("tinggiBadan"));
+                                        snapshot.data?.get("tinggiBadan") +
+                                            " Cm");
                                   })
                             ],
                           ),
@@ -178,6 +179,16 @@ class _profileState extends State<profile> {
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
+                    profileIcon(
+                      judul: "Reset Password",
+                      ikon: Icons.manage_accounts,
+                      saatTekan: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => resetPassword()));
+                      },
+                    ),
                     profileIcon(
                       judul: "About",
                       ikon: Icons.info,

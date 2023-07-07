@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'AppBar.dart';
@@ -136,6 +138,61 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
 
   String jenisKelamin = "";
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late String userId;
+
+  void getDataFromFirestore() async {
+    try {
+      // Mendapatkan user ID saat ini dari Firebase Authentication
+
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        userId = currentUser.uid;
+
+        // Mengakses dokumen pengguna dari koleksi "users" berdasarkan user ID
+        DocumentSnapshot documentSnapshot =
+            await _firestore.collection('users').doc(userId).get();
+        Map<String, dynamic> userData =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        // Mengambil nilai notelfon dan username dari userData
+
+        String beratBadan = userData['beratBadan'];
+        String tinggiBadan = userData['tinggiBadan'];
+
+        // Mengupdate nilai-nilai pada TextEditingController sesuai dengan data yang diambil dari Firestore
+
+        weightController.text = beratBadan;
+        heightController.text = tinggiBadan;
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan saat mengambil data.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDataFromFirestore();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,7 +229,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                     ),
                     Center(
                       child: Text(
-                        "Heart Rate",
+                        "Kalori",
                         style: TextStyle(
                           fontSize: 24,
                           color: Color(0xFF1368BB),
