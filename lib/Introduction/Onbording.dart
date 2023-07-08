@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
 
 import 'IntroPage_1.dart';
 import 'IntroPage_2.dart';
@@ -41,11 +42,17 @@ class _OnbordingState extends State<OnbordingScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _controller.jumpToPage(2);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return HalamanAwal();
+                    }));
                   },
                   child: Text(
-                    'skip',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'SKIP',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 onLasPage
@@ -57,8 +64,11 @@ class _OnbordingState extends State<OnbordingScreen> {
                           }));
                         },
                         child: Text(
-                          'Done',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          'DONE',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     : GestureDetector(
@@ -68,8 +78,11 @@ class _OnbordingState extends State<OnbordingScreen> {
                               curve: Curves.easeIn);
                         },
                         child: Text(
-                          'Next',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
+                          'NEXT',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
               ],
