@@ -7,16 +7,25 @@ class IntroPage1 extends StatelessWidget {
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(8),
-        color: Colors.yellow,
+        color: Color.fromRGBO(19, 103, 187, 1),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Center(
+              child: Text(
+                'WELCOME TO HEALTHY SKUY',
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
             Container(
-              width: 200,
-              height: 200,
+              width: 500,
+              height: 500,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/iklan1.jpg"),
+                    image: AssetImage("assets/images/intro1.png"),
                     fit: BoxFit.contain),
               ),
             ),
