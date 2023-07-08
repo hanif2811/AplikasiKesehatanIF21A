@@ -8,6 +8,8 @@ import '../../widgets/kalkulator_page.dart';
 import 'circle_button.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/SportPage/YogaPage.dart';
 
+import 'SportPage/FitnesPage.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -145,6 +147,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 20),
                       Column(
                         children: [
                           GridView.count(
@@ -243,7 +246,13 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CountdownScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 60),
                       shape: RoundedRectangleBorder(
@@ -253,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                           Colors.white, // Ubah warna tombol menjadi putih
                     ),
                     child: Text(
-                      'Running Apps',
+                      'Yoga Ibu Hamil',
                       style: TextStyle(
                         color: Colors.black, // Ubah warna teks menjadi hitam
                       ),
@@ -261,7 +270,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FitesScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 60),
                       shape: RoundedRectangleBorder(
@@ -271,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                           Colors.white, // Ubah warna tombol menjadi putih
                     ),
                     child: Text(
-                      'Latihan Kebugaran',
+                      'Fitnes Dengan Alat',
                       style: TextStyle(
                         color: Colors.black, // Ubah warna teks menjadi hitam
                       ),
@@ -295,12 +309,13 @@ class _HomePageState extends State<HomePage> {
                           Colors.white, // Ubah warna tombol menjadi putih
                     ),
                     child: Text(
-                      'Yoga Ibu Hamil',
+                      'Latihan Kebugaran',
                       style: TextStyle(
                         color: Colors.black, // Ubah warna teks menjadi hitam
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
                   SizedBox(
                     height: 20,
                   )
