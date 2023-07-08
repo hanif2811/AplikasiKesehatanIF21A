@@ -1,21 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class CountdownApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Duduk Sila'),
-        ),
-        body: CountdownScreen(),
-      ),
-    );
-  }
-}
-
 class CountdownScreen extends StatefulWidget {
   @override
   _CountdownScreenState createState() => _CountdownScreenState();
