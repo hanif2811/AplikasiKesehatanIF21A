@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahIklan.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahMenu.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/Tipstrik.dart';
@@ -58,6 +60,17 @@ class _AdminBerandaState extends State<AdminBeranda> {
                           MaterialPageRoute(builder: (context) => tipsTrik()));
                     },
                     child: Text("Edit Tips & Trik"))),
+            SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HalamanAwal()));
+                    },
+                    child: Text("Log OUT"))),
           ],
         ),
       ),

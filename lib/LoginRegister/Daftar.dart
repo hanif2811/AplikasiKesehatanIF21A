@@ -32,7 +32,8 @@ class _DaftarState extends State<Daftar> {
         'email': email,
         'beratBadan': "",
         'tinggiBadan': '',
-        'tanggalLahir': ''
+        'tanggalLahir': '',
+        'role': 'user'
       });
       print(
           'Pengguna berhasil ditambahkan ke Firebase Authentication dan Firestore.');
@@ -164,7 +165,7 @@ class _DaftarState extends State<Daftar> {
                     signUpWithEmailAndPassword(
                         email, password, no_telp, fullname);
 
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
                     );

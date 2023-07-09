@@ -67,13 +67,6 @@ class _BerandaState extends State<Beranda> {
         backgroundColor: Colors.transparent,
       ),
       body: menuList(),
-      floatingActionButton: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AdminBeranda()));
-          },
-          child: Text("Admin")),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
