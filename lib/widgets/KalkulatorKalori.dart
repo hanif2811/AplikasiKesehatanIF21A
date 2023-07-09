@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import 'AppBar.dart';
 
 List<String> aktifitas = [
@@ -84,34 +82,59 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
 
   void kirimData() {
     String result = calculateCalories().toStringAsFixed(2);
-
-    AlertDialog alertDialog = AlertDialog(
-      content: Container(
-        width: 300.0,
-        height: 200.0,
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Umur : ${ageController.text} Tahun",
-                    textAlign: TextAlign.justify),
-                Text("Berat Badan : ${weightController.text} Kg",
-                    textAlign: TextAlign.justify),
-                Text("Tinggi Badan : ${heightController.text} Cm",
-                    textAlign: TextAlign.justify),
-                Text("Jenis Kelamin : $jenisKelamin",
-                    textAlign: TextAlign.justify),
-                Text("Level Aktifitas : $pilihAktifitas",
-                    textAlign: TextAlign.justify),
-                Text("Kebutuhan Kalori Harian : $result Kalori",
-                    textAlign: TextAlign.justify),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
+    if (ageController.text.isEmpty ||
+        weightController.text.isEmpty ||
+        heightController.text.isEmpty ||
+        jenisKelamin.isEmpty ||
+        pilihAktifitas.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Harap isi semua field"),
+        duration: Duration(seconds: 2),
+      ));
+    } else {
+      AlertDialog alertDialog = AlertDialog(
+        content: Container(
+          width: 300.0,
+          height: 250.0,
+          child: ListView(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Umur : ${ageController.text} Tahun",
+                      textAlign: TextAlign.justify),
+                  Text("Berat Badan : ${weightController.text} Kg",
+                      textAlign: TextAlign.justify),
+                  Text("Tinggi Badan : ${heightController.text} Cm",
+                      textAlign: TextAlign.justify),
+                  Text("Jenis Kelamin : $jenisKelamin",
+                      textAlign: TextAlign.justify),
+                  Text("Level Aktifitas : $pilihAktifitas",
+                      textAlign: TextAlign.justify),
+                  Text("Kebutuhan Kalori Harian : $result Kalori",
+                      textAlign: TextAlign.justify),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("OK")),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Column(
                 children: [
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -119,72 +142,24 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("OK")),
+                        child: const Text("Tips menjaga kebutuhan kalori")),
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      },
-    );
-  }
-
-  String jenisKelamin = "";
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late String userId;
-
-  void getDataFromFirestore() async {
-    try {
-      User? currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null) {
-        userId = currentUser.uid;
-
-        DocumentSnapshot documentSnapshot =
-            await _firestore.collection('users').doc(userId).get();
-        Map<String, dynamic> userData =
-            documentSnapshot.data() as Map<String, dynamic>;
-
-        String beratBadan = userData['beratBadan'];
-        String tinggiBadan = userData['tinggiBadan'];
-
-        weightController.text = beratBadan;
-        heightController.text = tinggiBadan;
-      }
-    } catch (e) {
+      );
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Terjadi kesalahan saat mengambil data.'),
-            actions: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
+          return alertDialog;
         },
       );
     }
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    getDataFromFirestore();
-    super.initState();
-  }
+  String jenisKelamin = "";
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +198,7 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                       ),
                       Center(
                         child: Text(
-                          "Kalori",
+                          " Kalori",
                           style: TextStyle(
                             fontSize: 24,
                             color: Color(0xFF1368BB),
@@ -237,6 +212,10 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                     height: 16,
                   ),
                   TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: weightController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -254,6 +233,10 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                     height: 16,
                   ),
                   TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: heightController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -271,6 +254,10 @@ class _kalkulator_kaloriState extends State<kalkulator_kalori> {
                     height: 16,
                   ),
                   TextField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     controller: ageController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(

@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Masuk.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-
 import '../../widgets/AppBar.dart';
 
 class Daftar extends StatefulWidget {
@@ -46,6 +45,13 @@ class _DaftarState extends State<Daftar> {
     registerUser(email, password, username, nama_lengkap);
   }
 
+  bool _isValidEmail(String value) {
+    final emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+    );
+    return emailRegex.hasMatch(value);
+  }
+
   String email = "";
   String password = "";
   String fullname = "";
@@ -79,7 +85,12 @@ class _DaftarState extends State<Daftar> {
               width: 400,
               child: TextFormField(
                 validator: (val) {
-                  return val!.isEmpty ? "Email anda kosong" : null;
+                  if (val!.isEmpty) {
+                    return "Email anda kosong";
+                  } else if (!_isValidEmail(val)) {
+                    return "Email tidak valid";
+                  }
+                  return null;
                 },
                 decoration: InputDecoration(
                   labelText: "Masukkan email",
@@ -121,6 +132,10 @@ class _DaftarState extends State<Daftar> {
                 validator: (val) {
                   return val!.isEmpty ? "No telp anda kosong" : null;
                 },
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
                 decoration: InputDecoration(
                   labelText: "Masukkan no telp",
                   border: OutlineInputBorder(
