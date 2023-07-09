@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key});
@@ -22,19 +23,15 @@ class _EditProfileState extends State<EditProfile> {
 
   void getDataFromFirestore() async {
     try {
-      // Mendapatkan user ID saat ini dari Firebase Authentication
-
       User? currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser != null) {
         userId = currentUser.uid;
 
-        // Mengakses dokumen pengguna dari koleksi "users" berdasarkan user ID
         DocumentSnapshot documentSnapshot =
             await _firestore.collection('users').doc(userId).get();
         Map<String, dynamic> userData =
             documentSnapshot.data() as Map<String, dynamic>;
 
-        // Mengambil nilai notelfon dan username dari userData
         String notelfon = userData['no_telp'];
         String username = userData['nama_lengkap'];
         String email = userData['email'];
@@ -42,7 +39,6 @@ class _EditProfileState extends State<EditProfile> {
         String tinggiBadan = userData['tinggiBadan'];
         String tanggalLahir = userData['tanggalLahir'];
 
-        // Mengupdate nilai-nilai pada TextEditingController sesuai dengan data yang diambil dari Firestore
         controllernama.text = username;
         controllernoTelfon.text = notelfon;
         controlleremail.text = email;
@@ -147,27 +143,62 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  bool validateEmail(String email) {
+    final RegExp emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+    );
+
+    if (emailRegex.hasMatch(email)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   late DateTime date;
 
   @override
   void initState() {
     super.initState();
-    date = DateTime(2023, 6, 9);
+    date = DateTime.now();
 
-    super.initState();
     getDataFromFirestore();
   }
 
   @override
   void dispose() {
     controllernama.dispose();
-
     controllertBadan.dispose();
     controllerbBadan.dispose();
     controlleremail.dispose();
     controllernoTelfon.dispose();
     tglLahir.dispose();
     super.dispose();
+  }
+
+  Future<void> pickDob() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      calculateAge(pickedDate);
+    }
+  }
+
+  void calculateAge(DateTime birth) {
+    DateTime now = DateTime.now();
+    Duration age = now.difference(birth);
+    int years = age.inDays ~/ 365;
+    String myAge = '$years tahun';
+
+    setState(() {
+      date = birth;
+      tglLahir.text = myAge;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -206,15 +237,20 @@ class _EditProfileState extends State<EditProfile> {
               inputanProfile(
                   judul: "Nama Lengkap", controller1: controllernama),
               const SizedBox(height: 20),
-              inputanProfile(judul: "E-Mail", controller1: controlleremail),
+              inputanProfile(
+                judul: "E-Mail",
+                controller1: controlleremail,
+                inputType: TextInputType.emailAddress,
+              ),
               const SizedBox(height: 20),
               Container(
                 width: MediaQuery.of(context).size.width * 0.95,
                 height: MediaQuery.of(context).size.height * 0.1,
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black)),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -228,20 +264,7 @@ class _EditProfileState extends State<EditProfile> {
                         height: MediaQuery.of(context).size.height * 0.1,
                         child: ElevatedButton(
                           onPressed: () async {
-                            DateTime? newDate = await showDatePicker(
-                              context: context,
-                              initialDate: date,
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
-
-                            if (newDate == null) return;
-
-                            setState(() {
-                              date = newDate;
-                              tglLahir.text =
-                                  '${newDate.year}/${newDate.month}/${newDate.day}';
-                            });
+                            await pickDob();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromRGBO(19, 103, 187, 1),
@@ -262,16 +285,19 @@ class _EditProfileState extends State<EditProfile> {
               inputanProfile(
                 judul: "No. Telepon",
                 controller1: controllernoTelfon,
+                inputType: TextInputType.number,
               ),
               const SizedBox(height: 20),
               inputanProfile(
                 judul: "Tinggi Badan",
                 controller1: controllertBadan,
+                inputType: TextInputType.number,
               ),
               const SizedBox(height: 20),
               inputanProfile(
                 judul: "Berat Badan",
                 controller1: controllerbBadan,
+                inputType: TextInputType.number,
               ),
               const SizedBox(height: 30),
             ],
@@ -282,29 +308,85 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-class inputanProfile extends StatelessWidget {
+class inputanProfile extends StatefulWidget {
   const inputanProfile({
     Key? key,
     required this.judul,
     required this.controller1,
+    this.inputType = TextInputType.text,
   }) : super(key: key);
 
   final String judul;
   final TextEditingController controller1;
+  final TextInputType inputType;
+
+  @override
+  _InputanProfileState createState() => _InputanProfileState();
+}
+
+class _InputanProfileState extends State<inputanProfile> {
+  bool showError = false;
+  String errorMessage = '';
+
+  bool validateEmail(String email) {
+    final RegExp emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+    );
+    return emailRegex.hasMatch(email);
+  }
+
+  void showErrorMsg(String message) {
+    setState(() {
+      showError = true;
+      errorMessage = message;
+    });
+  }
+
+  void hideErrorMsg() {
+    setState(() {
+      showError = false;
+      errorMessage = '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller1,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+    return Column(
+      children: [
+        TextField(
+          controller: widget.controller1,
+          keyboardType: widget.inputType,
+          inputFormatters: widget.inputType == TextInputType.number
+              ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+              : null,
+          onChanged: (value) {
+            if (widget.inputType == TextInputType.emailAddress) {
+              bool isValid = validateEmail(value);
+              if (!isValid) {
+                showErrorMsg('Email tidak valid');
+              } else {
+                hideErrorMsg();
+              }
+            }
+          },
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            labelText: widget.judul,
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        labelText: judul,
-      ),
+        if (showError)
+          Text(
+            errorMessage,
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+      ],
     );
   }
 }

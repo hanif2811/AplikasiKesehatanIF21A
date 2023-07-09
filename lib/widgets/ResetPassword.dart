@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
@@ -14,55 +15,112 @@ class _resetPasswordState extends State<resetPassword> {
   final TextEditingController currentPassword = TextEditingController();
   final TextEditingController newPassword = TextEditingController();
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late String userId;
+
+  void getDataFromFirestore() async {
+    try {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        userId = currentUser.uid;
+
+        DocumentSnapshot documentSnapshot =
+            await _firestore.collection('users').doc(userId).get();
+        Map<String, dynamic> userData =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        String email = userData['email'];
+
+        controlleremail.text = email;
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Terjadi kesalahan saat mengambil data.'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   void changePassword(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: Text("Konfirmasi"),
-          content: Text("Apakah Anda yakin ingin mengubah password?"),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.of(dialogContext).pop();
-                try {
-                  UserCredential userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: controlleremail.text,
-                    password: currentPassword.text,
-                  );
-                  User? user = userCredential.user;
-                  if (user != null) {
-                    await user.updatePassword(newPassword.text);
+    if (controlleremail.text.isEmpty ||
+        currentPassword.text.isEmpty ||
+        newPassword.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Harap isi semua field"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text("Konfirmasi"),
+            content: Text("Apakah Anda yakin ingin mengubah password?"),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(dialogContext).pop();
+                  try {
+                    UserCredential userCredential =
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: controlleremail.text,
+                      password: currentPassword.text,
+                    );
+                    User? user = userCredential.user;
+                    if (user != null) {
+                      await user.updatePassword(newPassword.text);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Sandi berhasil diubah"),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  } catch (error) {
+                    print('Terjadi kesalahan saat mengubah password: $error');
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("Sandi berhasil diubah"),
+                        content: Text("Sandi gagal diubah"),
                         duration: Duration(seconds: 2),
                       ),
                     );
                   }
-                } catch (error) {
-                  print('Terjadi kesalahan saat mengubah password: $error');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Sandi gagal diubah"),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                }
-              },
-              child: Text("Ya"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
-              child: Text("Tidak"),
-            ),
-          ],
-        );
-      },
-    );
+                },
+                child: Text("Ya"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+                child: Text("Tidak"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDataFromFirestore();
+    super.initState();
   }
 
   @override

@@ -5,8 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
-
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 
 class Login extends StatefulWidget {
@@ -21,6 +19,13 @@ class _LoginState extends State<Login> {
   String email = "";
   String password = "";
   bool _obscureText = true;
+
+  bool _isValidEmail(String value) {
+    final emailRegex = RegExp(
+      r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$',
+    );
+    return emailRegex.hasMatch(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +57,10 @@ class _LoginState extends State<Login> {
                   width: 400,
                   child: TextFormField(
                     validator: (val) {
-                      if (val == null || val.isEmpty) {
-                        return 'Jangan kosongi email anda';
+                      if (val!.isEmpty) {
+                        return "Email anda kosong";
+                      } else if (!_isValidEmail(val)) {
+                        return "Email tidak valid";
                       }
                       return null;
                     },
@@ -210,7 +217,7 @@ class _LoginState extends State<Login> {
         print(e.toString());
 
         final snackBar = SnackBar(
-          content: Text("Username atau paswword salah"),
+          content: Text("Email atau paswword salah"),
           duration: Duration(seconds: 3),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_kalkulator.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/widgets/scroll_tips.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'editProfile.dart';
 
 class kalkulator_Page extends StatefulWidget {
   const kalkulator_Page({super.key});

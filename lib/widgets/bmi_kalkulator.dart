@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
-
 import 'AppBar.dart';
 
 class BMICalculatorScreen extends StatefulWidget {
@@ -143,6 +142,10 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                 ),
                 TextField(
                   controller: _heightController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -160,6 +163,10 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                 ),
                 TextField(
                   controller: _weightController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
