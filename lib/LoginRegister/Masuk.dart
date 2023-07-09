@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/Daftar.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Beranda.dart';
 
@@ -182,19 +184,53 @@ class _LoginState extends State<Login> {
 
   Future<void> login() async {
     if (_formkey1.currentState!.validate()) {
-      final auth = FirebaseAuth.instance;
-      auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      }).onError((error, stackTrace) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+        var user = userCredential.user;
+
+        if (user != null) {
+          DocumentSnapshot snapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+          if (snapshot.exists) {
+            String role = snapshot.get("role");
+
+            if (role == 'admin') {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => AdminBeranda()));
+            } else if (role == 'user') {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
+            }
+          }
+        }
+      } catch (e) {
+        print(e.toString());
+
         final snackBar = SnackBar(
           content: Text("Username atau paswword salah"),
           duration: Duration(seconds: 3),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
+      }
+
+      // final auth = FirebaseAuth.instance;
+      // auth
+      //     .signInWithEmailAndPassword(email: email, password: password)
+      //         .then((value) {
+      //       Navigator.pushReplacement(
+      //           context, MaterialPageRoute(builder: (context) => HomePage()));
+      //     }).onError((error, stackTrace) {
+      //       final snackBar = SnackBar(
+      //         content: Text("Username atau paswword salah"),
+      //         duration: Duration(seconds: 3),
+      //       );
+      //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      //     });
+      //   }
+      // }
     }
   }
 }
