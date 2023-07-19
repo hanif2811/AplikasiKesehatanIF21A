@@ -19,8 +19,9 @@ void updateValue(int index, String field, dynamic newValue) async {
 class Updatebaru extends StatefulWidget {
   String MenuId;
   String judul;
+  final collectioMenu;
 
-  Updatebaru(this.MenuId, this.judul);
+  Updatebaru(this.MenuId, this.judul, this.collectioMenu);
   @override
   State<Updatebaru> createState() => _UpdatebaruState();
 }
@@ -38,7 +39,7 @@ class _UpdatebaruState extends State<Updatebaru> {
 
   Future<void> fetchData(String menuId) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(widget.collectioMenu)
         .doc(menuId)
         .collection("List_Gejala")
         .get();
@@ -54,7 +55,11 @@ class _UpdatebaruState extends State<Updatebaru> {
       });
     } else {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => UpdateMenu()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => UpdateMenu(
+                    collectionMenu: widget.collectioMenu,
+                  )));
     }
   }
 
@@ -205,16 +210,4 @@ class _UpdatebaruState extends State<Updatebaru> {
       ),
     );
   }
-}
-
-Widget Pertanyaan_Jawaban(BuildContext context) {
-  return Container(
-    height: 400,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Column(
-      children: [],
-    ),
-  );
 }

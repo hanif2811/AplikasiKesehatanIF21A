@@ -164,7 +164,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "balita",
+                                            )),
                                   );
                                 },
                               ),
@@ -176,7 +178,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "ibu hamil",
+                                            )),
                                   );
                                 },
                               ),
@@ -188,7 +192,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "remaja",
+                                            )),
                                   );
                                 },
                               ),
@@ -200,7 +206,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "dewasa",
+                                            )),
                                   );
                                 },
                               ),
@@ -212,7 +220,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "lansia",
+                                            )),
                                   );
                                 },
                               ),
@@ -224,7 +234,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Beranda()),
+                                        builder: (context) => Beranda(
+                                              collectionMenu: "anak-anak",
+                                            )),
                                   );
                                 },
                               ),

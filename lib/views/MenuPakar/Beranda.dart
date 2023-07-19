@@ -3,14 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/HomePage/home_page.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/Introduction.dart';
-import 'package:tugasakhir_aplikasi_kesehatan/views/MenuPakar/SistemPakar.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 
 class Beranda extends StatefulWidget {
-  const Beranda({super.key});
+  const Beranda({super.key, required this.collectionMenu});
+  final collectionMenu;
 
   @override
   State<Beranda> createState() => _BerandaState();
@@ -23,8 +22,9 @@ class _BerandaState extends State<Beranda> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24),
       child: StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection("tambah_menu").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection(widget.collectionMenu)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Text("Tunggu");
@@ -41,6 +41,7 @@ class _BerandaState extends State<Beranda> {
                     MenuId: snapshot.data?.docs[Index]["MenuId"],
                     fotoAhli: snapshot.data?.docs[Index]["fotoAhli"],
                     namaAhli: snapshot.data?.docs[Index]["namaAhli"],
+                    collectionMenu: widget.collectionMenu,
                   );
                 });
           }
@@ -57,9 +58,6 @@ class _BerandaState extends State<Beranda> {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => (HomePage())));
-              // setState(() {
-              //   _colorcontainer = const Color.fromARGB(255, 190, 190, 190);
-              // });
             },
             child: appBarMenuPakar(context)),
         elevation: 0.0,
@@ -78,20 +76,20 @@ class menuTile extends StatelessWidget {
   String MenuId = "";
   String fotoAhli = "";
   String namaAhli = "";
+  final collectionMenu;
   menuTile(
       {required this.url,
       required this.judul,
       required this.deskripsi,
       required this.MenuId,
       required this.fotoAhli,
-      required this.namaAhli});
+      required this.namaAhli,
+      required this.collectionMenu});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => MenuPakar(MenuId, judul)));
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -100,6 +98,7 @@ class menuTile extends StatelessWidget {
                       Judul: judul,
                       fotoAhli: fotoAhli,
                       namaAhli: namaAhli,
+                      collectionMenu: collectionMenu,
                     )));
       },
       child: Container(

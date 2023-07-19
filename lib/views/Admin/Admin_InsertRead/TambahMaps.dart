@@ -4,7 +4,9 @@ import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/AdminBeranda.dart';
 
 class TambahMaps extends StatefulWidget {
   final menuId;
-  const TambahMaps({super.key, required this.menuId});
+  final collectionMenu;
+  const TambahMaps(
+      {super.key, required this.menuId, required this.collectionMenu});
 
   @override
   State<TambahMaps> createState() => _TambahMapsState();
@@ -24,7 +26,7 @@ class _TambahMapsState extends State<TambahMaps> {
       'nama': ListNama,
     };
 
-    await dbService.tambahMaps(add_Maps, widget.menuId);
+    await dbService.tambahMaps(add_Maps, widget.menuId, widget.collectionMenu);
   }
 
   @override

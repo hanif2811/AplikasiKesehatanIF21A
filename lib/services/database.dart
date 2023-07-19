@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DbService {
-  Future<void> tambahMenu(Map<String, String> dataMenu, String menuId) async {
+  Future<void> tambahMenu(
+      Map<String, String> dataMenu, String menuId, String collection) async {
     await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(collection)
         .doc(menuId)
         .set(dataMenu)
         .catchError((e) {
@@ -12,9 +13,9 @@ class DbService {
   }
 
   Future<void> tambahGejala(
-      Map<String, dynamic> dataGejala, String menuId) async {
+      Map<String, dynamic> dataGejala, String menuId, String collection) async {
     await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(collection)
         .doc(menuId)
         .collection("List_Gejala")
         .add(dataGejala)
@@ -23,10 +24,10 @@ class DbService {
     });
   }
 
-  Future<void> tambahPenanganan(
-      Map<String, dynamic> dataPenanganan, String menuId) async {
+  Future<void> tambahPenanganan(Map<String, dynamic> dataPenanganan,
+      String menuId, String collection) async {
     await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(collection)
         .doc(menuId)
         .collection("penanganan")
         .add(dataPenanganan)
@@ -35,9 +36,10 @@ class DbService {
     });
   }
 
-  Future<void> tambahMaps(Map<String, dynamic> dataMap, String menuId) async {
+  Future<void> tambahMaps(
+      Map<String, dynamic> dataMap, String menuId, String collection) async {
     await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(collection)
         .doc(menuId)
         .collection("maps")
         .add(dataMap)

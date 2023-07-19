@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/LoginRegister/HalamanAwal.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/PilihanMenu.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahIklan.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahMenu.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/Tipstrik.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/UpdateMenu.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/UpdatePilihanMenu.dart';
 
 class AdminBeranda extends StatefulWidget {
   const AdminBeranda({super.key});
@@ -31,7 +33,7 @@ class _AdminBerandaState extends State<AdminBeranda> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TambahMenu()));
+                              builder: (context) => PilihanMenu()));
                     },
                     child: Text("Tambah menu dan Gejala"))),
             SizedBox(
@@ -41,7 +43,7 @@ class _AdminBerandaState extends State<AdminBeranda> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => UpdateMenu()));
+                              builder: (context) => UpdatePilihanMenu()));
                     },
                     child: Text("Edit menu dan gejala "))),
             SizedBox(

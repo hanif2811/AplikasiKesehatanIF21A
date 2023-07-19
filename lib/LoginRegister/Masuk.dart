@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
               children: [
                 Container(
                     child: Image.network(
-                        'https://png.pngtree.com/png-vector/20220712/ourmid/pngtree-doctor-talking-to-patient-via-internet-png-image_5930390.png'),
+                        'https://asset.kompas.com/crops/rxRWdNuBj-WLZIU7Wz4vqqWZZRE=/0x0:998x665/750x500/data/photo/2022/10/20/6350beaeeafc7.jpg'),
                     height: 300,
                     width: 300),
                 SizedBox(height: 20),
