@@ -37,31 +37,11 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     _timer?.cancel();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => NextPage()),
+      MaterialPageRoute(builder: (context) => getNextPage()),
     );
   }
 
-  String formatDuration(Duration duration) {
-    String minutes = (duration.inSeconds ~/ 60).toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    return '$minutes:$seconds';
-  }
-}
-
-class CountdownScreen extends StatefulWidget {
-  @override
-  _CountdownScreenState createState() => _CountdownScreenState();
-}
-
-class _CountdownScreenState extends State<CountdownScreen>
-    with CountdownMixin<CountdownScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildContent(String title, String imageUrl) {
     Duration countdownDuration = Duration(seconds: _countdown);
     String formattedCountdown = formatDuration(countdownDuration);
 
@@ -85,16 +65,14 @@ class _CountdownScreenState extends State<CountdownScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Duduk Bersila',
+                      title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 20),
                     Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36804/v/450/depositphotos_368048054-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
+                      image: NetworkImage(imageUrl),
                       width: 500,
                       height: 250,
                     ),
@@ -147,6 +125,40 @@ class _CountdownScreenState extends State<CountdownScreen>
       ),
     );
   }
+
+  Widget getNextPage();
+
+  String formatDuration(Duration duration) {
+    String minutes = (duration.inSeconds ~/ 60).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+}
+
+class CountdownScreen extends StatefulWidget {
+  @override
+  _CountdownScreenState createState() => _CountdownScreenState();
+}
+
+class _CountdownScreenState extends State<CountdownScreen>
+    with CountdownMixin<CountdownScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return buildContent(
+      'Duduk Bersila',
+      'https://st3.depositphotos.com/15891028/36804/v/450/depositphotos_368048054-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
+    );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPage();
+  }
 }
 
 class NextPage extends StatefulWidget {
@@ -162,96 +174,15 @@ class _NextPageState extends State<NextPage> with CountdownMixin<NextPage> {
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Berdiri Kayang',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476024-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageThree()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Berdiri Kayang',
+      'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476024-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageThree();
   }
 }
 
@@ -269,94 +200,15 @@ class _NextPageStateThree extends State<NextPageThree>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Duduk Ngangkang',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476018-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageFour()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Duduk Ngangkang',
+      'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476018-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageFour();
   }
 }
 
@@ -374,94 +226,15 @@ class _NextPageStateFour extends State<NextPageFour>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Tengkurap',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36804/v/450/depositphotos_368048388-stock-illustration-pregnant-female-in-sportswear-while.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageFive()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Tengkurap',
+      'https://st3.depositphotos.com/15891028/36804/v/450/depositphotos_368048388-stock-illustration-pregnant-female-in-sportswear-while.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageFive();
   }
 }
 
@@ -479,94 +252,15 @@ class _NextPageStateFive extends State<NextPageFive>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Telentang',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476016-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageSix()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Tenlentang',
+      'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476016-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageSix();
   }
 }
 
@@ -584,94 +278,15 @@ class _NextPageStateSix extends State<NextPageSix>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Gerakan Enam',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476012-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageSeven()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Gerakan Enam',
+      'https://st3.depositphotos.com/15891028/36747/v/450/depositphotos_367476012-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageSeven();
   }
 }
 
@@ -689,94 +304,15 @@ class _NextPageStateSeven extends State<NextPageSeven>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Gerakan Tujuh',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/37023/v/450/depositphotos_370232396-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NextPageEight()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Gerakan Tujuh',
+      'https://st3.depositphotos.com/15891028/37023/v/450/depositphotos_370232396-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return NextPageEight();
   }
 }
 
@@ -794,93 +330,15 @@ class _NextPageStateEight extends State<NextPageEight>
 
   @override
   Widget build(BuildContext context) {
-    Duration countdownDuration = Duration(seconds: _countdown);
-    String formattedCountdown = formatDuration(countdownDuration);
-
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(),
-      body: Center(
-        child: Container(
-          height: 500,
-          width: 330,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Color(0xffFFFFFF),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Gerakan Delapan',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                    SizedBox(height: 20),
-                    Image(
-                      image: NetworkImage(
-                        'https://st3.depositphotos.com/15891028/37023/v/450/depositphotos_370232408-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
-                      ),
-                      width: 500,
-                      height: 250,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Text(
-                  formattedCountdown,
-                  style: TextStyle(fontSize: 48),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => startCountdown(90),
-                      child: Text('Mulai'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: resetCountdown,
-                      child: Text('Ulangi'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => Finish()),
-                        );
-                      },
-                      child: Text('Next'),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return buildContent(
+      'Gerakan Delapan',
+      'https://st3.depositphotos.com/15891028/37023/v/450/depositphotos_370232408-stock-illustration-pregnant-female-sportswear-while-doing.jpg',
     );
+  }
+
+  @override
+  Widget getNextPage() {
+    return Finish();
   }
 }
 
