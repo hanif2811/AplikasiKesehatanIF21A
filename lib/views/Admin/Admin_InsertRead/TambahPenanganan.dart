@@ -7,10 +7,9 @@ import '../../../services/database.dart';
 
 class TambahPenanganan extends StatefulWidget {
   String menuId = "";
+  final collectionMenu;
 
-  TambahPenanganan(
-    this.menuId,
-  );
+  TambahPenanganan(this.menuId, this.collectionMenu);
 
   @override
   State<TambahPenanganan> createState() => _TambahPenangananState();
@@ -30,7 +29,8 @@ class _TambahPenangananState extends State<TambahPenanganan> {
       'Tinggi': Tinggi,
     };
 
-    await dbService.tambahPenanganan(add_penanganan, widget.menuId);
+    await dbService.tambahPenanganan(
+        add_penanganan, widget.menuId, widget.collectionMenu);
   }
 
   @override
@@ -125,8 +125,10 @@ class _TambahPenangananState extends State<TambahPenanganan> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  TambahMaps(menuId: widget.menuId)));
+                              builder: (context) => TambahMaps(
+                                    menuId: widget.menuId,
+                                    collectionMenu: widget.collectionMenu,
+                                  )));
                     }
                   },
                   child: Text("Tambah"),

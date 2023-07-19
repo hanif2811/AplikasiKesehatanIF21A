@@ -12,8 +12,9 @@ List<DocumentSnapshot> gejalaData = [];
 class MenuPakar extends StatefulWidget {
   String MenuId;
   String judul;
+  final collectionMenu;
 
-  MenuPakar(this.MenuId, this.judul);
+  MenuPakar(this.MenuId, this.judul, this.collectionMenu);
   @override
   State<MenuPakar> createState() => _MenuPakarState();
 }
@@ -32,7 +33,7 @@ class _MenuPakarState extends State<MenuPakar> {
 
   Future<void> fetchData(String menuId) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(widget.collectionMenu)
         .doc(menuId)
         .collection("List_Gejala")
         .get();
@@ -62,8 +63,8 @@ class _MenuPakarState extends State<MenuPakar> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    HasilDeteksi(widget.MenuId, widget.judul)),
+                builder: (context) => HasilDeteksi(
+                    widget.MenuId, widget.judul, widget.collectionMenu)),
           );
         });
       }
@@ -82,23 +83,6 @@ class _MenuPakarState extends State<MenuPakar> {
         total = 0;
       });
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(19, 103, 187, 1),
-        title: appBar(context),
-        centerTitle: true,
-      ),
-      body: gejalaData.isEmpty
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : DeteksiPenyakitPage(),
-    );
   }
 
   Widget DeteksiPenyakitPage() {
@@ -205,16 +189,21 @@ class _MenuPakarState extends State<MenuPakar> {
       ),
     );
   }
-}
 
-Widget Pertanyaan_Jawaban(BuildContext context) {
-  return Container(
-    height: 400,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-    ),
-    child: Column(
-      children: [],
-    ),
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromRGBO(19, 103, 187, 1),
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(19, 103, 187, 1),
+        title: appBar(context),
+        centerTitle: true,
+      ),
+      body: gejalaData.isEmpty
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : DeteksiPenyakitPage(),
+    );
+  }
 }

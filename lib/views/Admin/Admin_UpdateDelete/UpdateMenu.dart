@@ -11,7 +11,8 @@ import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/Upd
 import 'package:tugasakhir_aplikasi_kesehatan/widgets/AppBar.dart';
 
 class UpdateMenu extends StatefulWidget {
-  const UpdateMenu({super.key});
+  final collectionMenu;
+  const UpdateMenu({super.key, required this.collectionMenu});
 
   @override
   State<UpdateMenu> createState() => _UpdateMenuState();
@@ -26,8 +27,9 @@ class _UpdateMenuState extends State<UpdateMenu> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24),
       child: StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection("tambah_menu").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection(widget.collectionMenu)
+            .snapshots(),
         builder: (context, snapshot) {
           return snapshot.data == null
               ? Text("Tunggu")
@@ -39,6 +41,7 @@ class _UpdateMenuState extends State<UpdateMenu> {
                       judul: snapshot.data?.docs[Index]["judul"],
                       deskripsi: snapshot.data?.docs[Index]["deskripsi"],
                       MenuId: snapshot.data?.docs[Index]["MenuId"],
+                      collectionMenu: widget.collectionMenu,
                     );
                   });
         },
@@ -65,11 +68,13 @@ class menuTile extends StatelessWidget {
   String judul = "";
   String deskripsi = "";
   String MenuId = "";
+  final collectionMenu;
   menuTile(
       {required this.url,
       required this.judul,
       required this.deskripsi,
-      required this.MenuId});
+      required this.MenuId,
+      required this.collectionMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,8 @@ class menuTile extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Updatebaru(MenuId, judul)));
+                    builder: (context) =>
+                        Updatebaru(MenuId, judul, collectionMenu)));
           },
           child: Container(
             margin: EdgeInsets.only(bottom: 13),
@@ -128,7 +134,7 @@ class menuTile extends StatelessWidget {
                     child: Icon(Icons.update),
                     onTap: () async {
                       await FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .collection("List_Gejala")
                           .get()
@@ -141,8 +147,8 @@ class menuTile extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  UpdateGejala(MenuId, "", [], [])));
+                              builder: (context) => UpdateGejala(
+                                  MenuId, "", [], [], collectionMenu)));
                     },
                   ),
                   Text(
@@ -159,7 +165,7 @@ class menuTile extends StatelessWidget {
                     child: Icon(Icons.change_circle_sharp),
                     onTap: () async {
                       await FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .collection("penanganan")
                           .get()
@@ -172,7 +178,8 @@ class menuTile extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TambahPenanganan(MenuId)));
+                              builder: (context) =>
+                                  TambahPenanganan(MenuId, collectionMenu)));
                     },
                   ),
                   Text(
@@ -190,7 +197,7 @@ class menuTile extends StatelessWidget {
                     onTap: () {
                       //action code when clicked
                       FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .collection("List_Gejala")
                           .get()
@@ -201,7 +208,7 @@ class menuTile extends StatelessWidget {
                       });
 
                       FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .collection("penanganan")
                           .get()
@@ -212,7 +219,7 @@ class menuTile extends StatelessWidget {
                       });
 
                       FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .collection("maps")
                           .get()
@@ -223,7 +230,7 @@ class menuTile extends StatelessWidget {
                       });
 
                       FirebaseFirestore.instance
-                          .collection("tambah_menu")
+                          .collection(collectionMenu)
                           .doc(MenuId)
                           .delete()
                           .then((value) => print("Dokumen berhasil dihapus"))

@@ -16,8 +16,9 @@ double hasil() {
 class HasilDeteksi extends StatefulWidget {
   String MenuId;
   String judul;
+  final collectionMenu;
 
-  HasilDeteksi(this.MenuId, this.judul);
+  HasilDeteksi(this.MenuId, this.judul, this.collectionMenu);
 
   @override
   State<HasilDeteksi> createState() => _HasilDeteksiState();
@@ -38,7 +39,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
 
   Future<void> fetchDataPenanganan(String menuId) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(widget.collectionMenu)
         .doc(menuId)
         .collection("penanganan")
         .get();
@@ -49,7 +50,7 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
 
   Future<void> fetchDataMaps(String menuId) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("tambah_menu")
+        .collection(widget.collectionMenu)
         .doc(menuId)
         .collection("maps")
         .get();
@@ -77,7 +78,11 @@ class _HasilDeteksiState extends State<HasilDeteksi> {
         child: ElevatedButton(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Beranda()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Beranda(
+                          collectionMenu: null,
+                        )));
           },
           style: ButtonStyle(
               backgroundColor:

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/services/database.dart';
@@ -34,6 +35,36 @@ class _InsertIklanState extends State<InsertIklan> {
           context, MaterialPageRoute(builder: (context) => AdminBeranda()));
     }).catchError((e) {
       print(e.toString());
+    });
+  }
+
+  void deleteOldData() {
+    // FirebaseFirestore.instance
+    //                 .collection("iklan")
+    //                 .doc(ID)
+    //                 .delete()
+    //                 .then((value) => print("Dokumen berhasil dihapus"))
+    //                 .catchError((error) => print("Terjadi kesalahan: $error"));
+
+    DateTime currentTime = DateTime.now();
+
+    // Batasi jangka waktu tertentu, misal 7 hari
+    DateTime cutoffTime = currentTime.subtract(Duration(seconds: 50));
+
+    // Ambil referensi koleksi 'data'
+    CollectionReference dataCollection =
+        FirebaseFirestore.instance.collection('iklan');
+
+    // Buat query untuk mengambil dokumen dengan waktu yang telah berlalu
+    Query oldDataQuery =
+        dataCollection.where('timestamp', isLessThan: cutoffTime);
+
+    // Jalankan query untuk mengambil data
+    oldDataQuery.get().then((snapshot) {
+      // Hapus dokumen yang terpilih
+      snapshot.docs.forEach((doc) {
+        doc.reference.delete();
+      });
     });
   }
 

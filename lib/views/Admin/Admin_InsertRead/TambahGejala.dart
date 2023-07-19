@@ -10,7 +10,9 @@ class TambahGejala extends StatefulWidget {
   String question = "";
   List answers = [];
   List nilai = [];
-  TambahGejala(this.menuId, this.question, this.answers, this.nilai);
+  final collectionMenu;
+  TambahGejala(this.menuId, this.question, this.answers, this.nilai,
+      this.collectionMenu);
 
   @override
   State<TambahGejala> createState() => _TambahGejalaState();
@@ -63,7 +65,9 @@ class _TambahGejalaState extends State<TambahGejala> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => TambahOpsi(
-                                        widget.question, widget.menuId)));
+                                        widget.question,
+                                        widget.menuId,
+                                        widget.collectionMenu)));
                           }
                         },
                         child: Text("Selanjutnya"),

@@ -4,7 +4,8 @@ import 'package:tugasakhir_aplikasi_kesehatan/services/database.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_InsertRead/TambahGejala.dart';
 
 class TambahMenu extends StatefulWidget {
-  const TambahMenu({super.key});
+  final collectionMenu;
+  const TambahMenu({super.key, required this.collectionMenu});
 
   @override
   State<TambahMenu> createState() => _TambahMenuState();
@@ -34,11 +35,14 @@ class _TambahMenuState extends State<TambahMenu> {
         "namaAhli": namaAhli
       };
 
-      await dbService.tambahMenu(menuMap, menuId).then((value) {
+      await dbService
+          .tambahMenu(menuMap, menuId, widget.collectionMenu)
+          .then((value) {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => TambahGejala(menuId, "", [], [])));
+                builder: (context) =>
+                    TambahGejala(menuId, "", [], [], widget.collectionMenu)));
       }).catchError((e) {
         print(e.toString());
       });

@@ -10,7 +10,8 @@ import '../../../services/database.dart';
 class TambahOpsi extends StatefulWidget {
   String question = "";
   String menuId = "";
-  TambahOpsi(this.question, this.menuId);
+  final collectionMenu;
+  TambahOpsi(this.question, this.menuId, this.collectionMenu);
 
   @override
   State<TambahOpsi> createState() => _TambahOpsiState();
@@ -32,7 +33,8 @@ class _TambahOpsiState extends State<TambahOpsi> {
       "nilai": nilai
     };
 
-    await dbService.tambahGejala(gejalaMap, widget.menuId);
+    await dbService.tambahGejala(
+        gejalaMap, widget.menuId, widget.collectionMenu);
   }
 
   @override
@@ -81,7 +83,8 @@ class _TambahOpsiState extends State<TambahOpsi> {
                                     widget.menuId,
                                     widget.question,
                                     answers,
-                                    nilai)));
+                                    nilai,
+                                    widget.collectionMenu)));
                       },
                       child: Text("Kembali"),
                       style: ButtonStyle(
@@ -163,7 +166,11 @@ class _TambahOpsiState extends State<TambahOpsi> {
                                                     builder: (context) =>
                                                         TambahGejala(
                                                             widget.menuId,
-                                                            "", [], [])));
+                                                            "",
+                                                            [],
+                                                            [],
+                                                            widget
+                                                                .collectionMenu)));
                                           },
                                           child: Text("Ya")),
                                       TextButton(
@@ -173,7 +180,9 @@ class _TambahOpsiState extends State<TambahOpsi> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         TambahPenanganan(
-                                                            widget.menuId)));
+                                                            widget.menuId,
+                                                            widget
+                                                                .collectionMenu)));
                                           },
                                           child: Text("Tidak")),
                                     ],

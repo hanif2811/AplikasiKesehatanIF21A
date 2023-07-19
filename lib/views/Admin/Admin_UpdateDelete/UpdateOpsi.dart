@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/UpdateGejala.dart';
 import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/UpdateMenu.dart';
+import 'package:tugasakhir_aplikasi_kesehatan/views/Admin/Admin_UpdateDelete/UpdatePilihanMenu.dart';
 
 import '../../../services/database.dart';
 
 class UpdateOpsi extends StatefulWidget {
   String question = "";
   String menuId = "";
-  UpdateOpsi(this.question, this.menuId);
+  final collectionMenu;
+  UpdateOpsi(this.question, this.menuId, this.collectionMenu);
 
   @override
   State<UpdateOpsi> createState() => _UpdateOpsiState();
@@ -32,7 +34,8 @@ class _UpdateOpsiState extends State<UpdateOpsi> {
       "nilai": nilai
     };
 
-    await dbService.tambahGejala(gejalaMap, widget.menuId);
+    await dbService.tambahGejala(
+        gejalaMap, widget.menuId, widget.collectionMenu);
   }
 
   @override
@@ -81,7 +84,8 @@ class _UpdateOpsiState extends State<UpdateOpsi> {
                                     widget.menuId,
                                     widget.question,
                                     answers,
-                                    nilai)));
+                                    nilai,
+                                    widget.collectionMenu)));
                       },
                       child: Text("Kembali"),
                       style: ButtonStyle(
@@ -163,7 +167,11 @@ class _UpdateOpsiState extends State<UpdateOpsi> {
                                                     builder: (context) =>
                                                         UpdateGejala(
                                                             widget.menuId,
-                                                            "", [], [])));
+                                                            "",
+                                                            [],
+                                                            [],
+                                                            widget
+                                                                .collectionMenu)));
                                           },
                                           child: Text("Ya")),
                                       TextButton(
@@ -172,7 +180,7 @@ class _UpdateOpsiState extends State<UpdateOpsi> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        UpdateMenu()));
+                                                        UpdatePilihanMenu()));
                                           },
                                           child: Text("Tidak")),
                                     ],

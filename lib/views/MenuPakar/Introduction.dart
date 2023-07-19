@@ -7,13 +7,15 @@ class Introduction extends StatelessWidget {
   final Judul;
   final fotoAhli;
   final namaAhli;
+  final collectionMenu;
 
   const Introduction(
       {super.key,
       required this.Menuid,
       required this.Judul,
       required this.fotoAhli,
-      required this.namaAhli});
+      required this.namaAhli,
+      required this.collectionMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +64,18 @@ class Introduction extends StatelessWidget {
                         image: NetworkImage(fotoAhli), fit: BoxFit.cover)))),
       ],
       onDone: () {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => MenuPakar(Menuid, Judul)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    MenuPakar(Menuid, Judul, collectionMenu)));
       },
       onSkip: () {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => MenuPakar(Menuid, Judul)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    MenuPakar(Menuid, Judul, collectionMenu)));
       },
       showSkipButton: true,
       skip: Text(
