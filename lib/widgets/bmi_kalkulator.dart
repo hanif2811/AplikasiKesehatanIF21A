@@ -223,67 +223,68 @@ class BMIResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Hasil BMI'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'BMI Anda:',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              bmi.toStringAsFixed(2),
-              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Kategori:',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              kategori,
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20.0),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TipsScreen(kategori: kategori),
-                  ),
-                );
-              },
-              child: Container(
-                width: 200.0,
-                height: 200.0,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                // child: Icon(
-                //   Icons.arrow_forward,
-                //   size: 100.0,
-                //   color: Colors.white,
-                // ),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Hitung Kembali'),
-            ),
-          ],
+        appBar: AppBar(
+          title: Text('Hasil BMI'),
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  'BMI Anda:',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                bmi.toStringAsFixed(2),
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Kategori:',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                kategori,
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TipsScreen(kategori: kategori),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 200.0,
+                  height: 200.0,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  // child: Icon(
+                  //   Icons.arrow_forward,
+                  //   size: 100.0,
+                  //   color: Colors.white,
+                  // ),
+                ),
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Hitung Kembali'),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -294,13 +295,13 @@ class TipsScreen extends StatelessWidget {
 
   String getTips() {
     if (kategori == 'Kurus') {
-      return 'Tips untuk kategori Kurus';
+      return '1. Mengonsumsi Makanan yang Kaya Nutrisi\n2. Makan Lebih Sering dengan Porsi Sedikit\n3. Memilih Makanan Padat Kalori\n4. Mengonsumsi Camilan Sehat\n5. Rutin Berolahraga\n6. Minum di Waktu yang Tepat\n7. Memperbanyak Air Mineral dan Susu';
     } else if (kategori == 'Normal') {
-      return 'Tips untuk kategori Normal';
+      return 'Cara menjaga berat badan tetap ideal\n\n1. Kurangi cemilan tinggi GGL dan mengkonsumsi lebih banyak buah dan sayur\n2. Lakukan aktivitas fisik 30 menit per hari\n3. Istirahat yang cukup\n';
     } else if (kategori == 'Kelebihan Berat Badan') {
-      return 'Tips untuk kategori Kelebihan Berat Badan';
+      return 'Tips untuk kategori Kelebihan Berat Badan\n\n1. Hindari melewatkan sarapan\n2. Hindari minuman manis\n3. Konsumsi air putih sebelum makan\n4. Konsumsi makanan yang mengandung serat larut\n5. Konsumsi kopi dan teh\n6. Hindari makanan olahan\n7. Konsumsi makanan secara perlahan\n8. Lakukan olahraga secara rutin\n9. Tidur yang cukup';
     } else {
-      return 'Tips untuk kategori Obesitas';
+      return 'Tips untuk kategori Obesitas\n\n1. Konsumsi sayur dan buah minimal 5 porsi setiap harinya\n2. Membatasi tidur yang berlebihan\n3. Meningkatkan aktivitas fisik minimal 30 menit setiap hari. Lakukan secara teratur\n3-5 kali per minggu kemudian lakukan penyesuaian setelah beberapa minggu\n4. Membatasi aktivitas, seperti menonton televisi, bermain komputer dan games\n5. Batasi konsumsi gula, garam, dan lemak berlebih';
     }
   }
 

@@ -104,191 +104,302 @@ class _kalkulator_heartRateState extends State<kalkulator_heartRate> {
           hasil = "Rendah";
         }
       }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HeartRateResult(detak: detak, hasil: hasil),
+        ),
+      );
 
       consthasil.text = hasil;
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.black,
-              title: const Text(
-                "Detak Jantung anda",
-                style: TextStyle(color: Colors.white),
-              ),
-              content: Center(
-                  child: Text("" + consthasil.text,
-                      style: const TextStyle(color: Colors.white))),
-              actions: [
-                TextButton(
-                  child: const Text("OK"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1368BB),
-      appBar: AppBar(
-        title: appBar(context),
         backgroundColor: const Color(0xFF1368BB),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              margin: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
-              height: 329,
-              width: 330,
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xffFFFFFF)),
-                borderRadius: BorderRadius.circular(20),
-                color: const Color(0xffFFFFFF),
-              ),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+        appBar: AppBar(
+          title: appBar(context),
+          backgroundColor: const Color(0xFF1368BB),
+          centerTitle: true,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Container(
+                  margin: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                  height: 329,
+                  width: 330,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color(0xffFFFFFF)),
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color(0xffFFFFFF),
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 15),
-                          child: Center(
-                            child: Text(
-                              "Kalkulator",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xffFFED00),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 15, left: 5),
-                          child: Center(
-                            child: Text(
-                              "Heart Rate",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xFF1368BB),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                    width: 1.0, color: Colors.black)),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                    width: 1.0, color: Colors.black)),
-                            label: Text("Umur"),
-                            labelStyle: TextStyle(color: Colors.black)),
-                        controller: Umur,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        "*masukan umur anda",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 185, 185, 185),
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                    width: 1.0, color: Colors.black)),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                    width: 1.0, color: Colors.black)),
-                            label: Text("Detak Jantung"),
-                            labelStyle: TextStyle(color: Colors.black)),
-                        controller: DetakJantung,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 21, right: 21, bottom: 15),
-                      child: Text(
-                        "*Hitung detang jantung anda dengan stop wacth dalam 1 menit",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 150, 150, 150)),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: SizedBox(
-                          height: 38,
-                          width: 138,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: const Color(0xffFFED00),
-                                onPrimary: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25))),
-                            onPressed: () {
-                              heartrate();
-                            },
-                            child: const SizedBox(
-                              width: 120,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 15),
                               child: Center(
-                                  child: Text(
-                                "Hitung",
-                                style: TextStyle(
-                                    fontSize: 19, fontWeight: FontWeight.bold),
-                              )),
+                                child: Text(
+                                  "Kalkulator",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Color(0xffFFED00),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 15, left: 5),
+                              child: Center(
+                                child: Text(
+                                  "Heart Rate",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Color(0xFF1368BB),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                        width: 1.0, color: Colors.black)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                        width: 1.0, color: Colors.black)),
+                                label: Text("Umur"),
+                                labelStyle: TextStyle(color: Colors.black)),
+                            controller: Umur,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            "*masukan umur anda",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 185, 185, 185),
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                        width: 1.0, color: Colors.black)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    borderSide: BorderSide(
+                                        width: 1.0, color: Colors.black)),
+                                label: Text("Detak Jantung"),
+                                labelStyle: TextStyle(color: Colors.black)),
+                            controller: DetakJantung,
+                          ),
+                        ),
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 21, right: 21, bottom: 15),
+                          child: Text(
+                            "*Hitung detang jantung anda dengan stop wacth dalam 1 menit",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 150, 150, 150)),
+                          ),
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: SizedBox(
+                              height: 38,
+                              width: 138,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: const Color(0xffFFED00),
+                                    onPrimary: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25))),
+                                onPressed: () {
+                                  heartrate();
+                                },
+                                child: const SizedBox(
+                                  width: 120,
+                                  child: Center(
+                                      child: Text(
+                                    "Hitung",
+                                    style: TextStyle(
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                              ),
                             ),
                           ),
+                        )
+                      ]),
+                ),
+              )
+
+              // TextField(
+              //   decoration: InputDecoration(
+              //       label: Text("hasil"), border: OutlineInputBorder()),
+              //   controller: consthasil,
+              // ),
+            ],
+          ),
+        ));
+  }
+}
+
+class HeartRateResult extends StatelessWidget {
+  final int detak;
+  final String hasil;
+
+  HeartRateResult({required this.detak, required this.hasil});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Hasil Heart Rate'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  'Detak Jantun Anda:',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                detak.toStringAsFixed(2),
+                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'Kategori:',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                hasil,
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TipsScreen(hasil: hasil),
+                    ),
+                  );
+                },
+                child: Container(
+                    width: 200.0,
+                    height: 200.0,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Cek Tips >',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     )
-                  ]),
-            ),
-          )
+                    // child: Icon(
+                    //   Icons.arrow_forward,
+                    //   size: 100.0,
+                    //   color: Colors.white,
+                    // ),
+                    ),
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Hitung Kembali'),
+              ),
+            ],
+          ),
+        ));
+  }
+}
 
-          // TextField(
-          //   decoration: InputDecoration(
-          //       label: Text("hasil"), border: OutlineInputBorder()),
-          //   controller: consthasil,
-          // ),
-        ],
+class TipsScreen extends StatelessWidget {
+  final String hasil;
+
+  TipsScreen({required this.hasil});
+
+  String getTips() {
+    if (hasil == 'Rendah') {
+      return '1. Mengendalikan stress\n2.Jangan Meroko\n3. Hindari penyalahgunaan narkotik\n4. Berolahraga rutin\n5. Menjaga Pola Makan\n6. Jaga level tekanan darah dan kolesterol\n7. Pesriksa ke dokter';
+    } else if (hasil == 'Normal') {
+      return '1. Aktif Berolahraga\n2. Hindari Kafein dan Nikotin\n3. Pertahankan Berat Badan yang Sehat\n4. Tetap Terhidrasi\n5 Tidur Nyenyak. ';
+    } else {
+      return '1. Menjaga berat badan normal\n2. Memulai olahraga teratur\n3. la terbiasa merokok, segera berhenti\n4. Kurangi asupan makanan yang banyak mengandung lemak jenuh dan garam\n5. Perbanyak konsumsi sayur dan buah\n6. Mengendalikan stres\n7. Batasi konsumsi kafein\n8. konsultasi ke dokter apabila perlu';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tips'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tips Sesuai Kategori Heart Rate',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.0),
+            Text(getTips()),
+          ],
+        ),
       ),
     );
   }
